@@ -1,3 +1,3 @@
 <x-app-layout>
-    <h1>Test</h1>
+    @include('components.shop.products-parts.products-list', ['products' => $products])
 </x-app-layout>
