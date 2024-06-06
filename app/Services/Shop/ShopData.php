@@ -11,4 +11,9 @@ class ShopData
 
         return $products;
     }
+
+    public function getProduct($id) {
+        $product = Product::find($id);
+        return $product;
+    }
 }

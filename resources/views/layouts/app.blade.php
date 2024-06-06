@@ -28,7 +28,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="py-8 px-12">
                 {{ $slot }}
             </main>
         </div>
