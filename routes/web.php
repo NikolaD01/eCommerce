@@ -10,20 +10,13 @@ Route::view('/', 'welcome');
 Route::prefix('dashboard')->group(function () {
    Route::view('/', 'dashboard')->name('dashboard');
 
-
    Route::prefix('shop')->group(function () {
        Route::view('/', 'dashboard.shop.index')->name('shop');
 
-       Route::get('/products', [ProductController::class, 'index'])->name('products');
-       Route::prefix('product')->group(function () {
-           Route::get('/{id}', [ProductController::class, 'show'])->name('product');
-           Route::get('/create', [ProductController::class, 'create'])->name('product.create');
-           Route::post('/create', [ProductController::class, 'store'])->name('product.store');
-           Route::put('/edit/{id}', [ProductController::class, 'update'])->name('product.update');
-           Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('product.delete');
-       });
+       Route::resource('products', ProductController::class);
+       Route::resource('categories', CategoryController::class);
 
-       Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+
        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
    });

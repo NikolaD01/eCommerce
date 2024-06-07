@@ -21,7 +21,7 @@ class ProductController extends Controller
         return view('dashboard.shop.products', ['products' => $this->products]);
     }
 
-    public  function show($id) {
+    public function show($id) {
        $product = $this->shopData->getProduct($id);
        return view('dashboard.shop.product.index', ['product' => $product]);
     }

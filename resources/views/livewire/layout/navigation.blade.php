@@ -51,10 +51,10 @@ new class extends Component
                                 <x-dropdown-link :href="route('shop')" wire:navigate>
                                     {{ __('Shop') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('products')" wire:navigate>
+                                <x-dropdown-link :href="route('products.index')" wire:navigate>
                                     {{ __('Products') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('categories')" wire:navigate>
+                                <x-dropdown-link :href="route('categories.index')" wire:navigate>
                                     {{ __('Categories') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link :href="route('orders')" wire:navigate>

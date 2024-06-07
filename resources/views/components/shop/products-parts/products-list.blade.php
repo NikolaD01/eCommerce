@@ -1,5 +1,5 @@
     @foreach($products as $product)
-        <a class="" href="{{route('product', ['id' => $product->id])}}">
+        <a class="" href="{{route('products.show', ['product' => $product->id])}}">
             <div class="relative h-[430px] overflow-hidden rounded-xl">
                 <img alt="coverImage" loading="lazy" width="1000" height="1000" decoding="async" data-nimg="1" class="h-full w-full object-cover object-top"
                      style="color:transparent" src="https://ben10hero.com/wp-content/uploads/2016/07/cannonbolt_10k.png"></div>
