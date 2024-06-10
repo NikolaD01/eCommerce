@@ -2,15 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Models\Product;
+use App\Models\Category;
 use Livewire\Component;
 
 class ProductUpdateForm extends Component
 {
-    public $product;
+    public $data;
 
-    public function mount($product) {
-        $this->product = $product;
+    public function __construct()
+    {
+    }
+    public function mount($data)
+    {
+      $this->data = $data;
     }
     public function render()
     {

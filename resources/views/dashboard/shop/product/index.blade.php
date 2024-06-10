@@ -1,7 +1,14 @@
 <x-app-layout>
     <section class="product grid grid-cols-2">
         <div class="product-form flex justify-center">
-            <livewire:product-update-form :product="$product"/>
+            <livewire:product-update-form  :data="[
+                'product' => $product,
+                'categories' => $categories,
+                'materials' => $materials,
+                'sizes' => $sizes,
+                'colors' => $colors
+            ]"
+            />
         </div>
         <div class="product-container">
             <div class="relative h-[430px] overflow-hidden rounded-xl object-cover	">
