@@ -1,4 +1,4 @@
-<form wire:submit="save" class="w-1/2">
+<form wire:submit.prevent="save" class="w-1/2">
     <div class="flex flex-col gap-3">
         <div >
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="title">Title</label>
@@ -19,7 +19,7 @@
         </div>
 
         <div>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple
             wire:model="category">
                 <option selected>Choose a category</option>
                 @foreach($data['categories'] as $category)
@@ -28,7 +28,8 @@
             </select>
         </div>
         <div>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple   wire:model="category">
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple
+                    wire:model="material">
                 <option selected>Choose a materials</option>
                 @foreach($data['materials'] as $material)
                     <option>{{$material->name}}</option>
@@ -36,7 +37,8 @@
             </select>
         </div>
         <div>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple   wire:model="category">
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple
+                    wire:model="size">
                 <option selected>Choose a sizes</option>
                 @foreach($data['sizes'] as $size)
                     <option>{{$size->name}}</option>
@@ -44,12 +46,14 @@
             </select>
         </div>
         <div>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple   wire:model="category">
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple
+                    wire:model="color">
                 <option selected>Choose a sizes</option>
                 @foreach($data['colors'] as $color)
                     <option>{{$color->name}}</option>
                 @endforeach
             </select>
         </div>
+        <button type="submit" class="bg-sky-500 hover:bg-sky-700 p-2 rounded text-white font-bold">Save</button>
     </div>
 </form>
