@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Category;
-use App\Services\Shop\Product\ProductImport;
 use Livewire\Component;
 
 class ProductUpdateForm extends Component
@@ -17,10 +16,9 @@ class ProductUpdateForm extends Component
     public $materials = [];
     public $sizes = [];
     public $colors = [];
-    protected $productImport;
+
     public function __construct()
     {
-        $this->productImport = new ProductImport();
     }
 
     public function save()

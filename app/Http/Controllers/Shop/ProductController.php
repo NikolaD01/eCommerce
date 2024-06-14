@@ -1,44 +1,51 @@
 <?php
-
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Services\Shop\ShopData;
+use App\Services\Shop\ProductService;
+use App\Services\Shop\ColorService;
+use App\Services\Shop\SizeService;
+use App\Services\Shop\MaterialService;
+use App\Services\Shop\CategoryService;
 
 class ProductController extends Controller
 {
-    private $products;
-    private $categories;
-    private $sizes;
-    private $colors;
-    private $materials;
-    public function __construct()
-    {
-        parent::__construct();
-        $this->products = $this->shopData->getAllProducts();
-        $this->categories = $this->shopData->getAllCategories();
-        $this->sizes = $this->shopData->getAllSizes();
-        $this->colors = $this->shopData->getAllColors();
-        $this->materials = $this->shopData->getAllMaterials();
+    protected $productService;
+    protected $colorService;
+    protected $sizeService;
+    protected $materialService;
+    protected $categoryService;
+
+    public function __construct(
+        ProductService $productService,
+        ColorService $colorService,
+        SizeService $sizeService,
+        MaterialService $materialService,
+        CategoryService $categoryService
+    ) {
+        $this->productService = $productService;
+        $this->colorService = $colorService;
+        $this->sizeService = $sizeService;
+        $this->materialService = $materialService;
+        $this->categoryService = $categoryService;
     }
 
     public function show($id) {
-        $product = $this->shopData->getProduct($id);
+        $product = $this->productService->getProduct($id);
         return view('dashboard.shop.product.index', [
             'product' => $product,
-            'categories' => $this->categories,
-            'sizes' => $this->sizes,
-            'colors' => $this->colors,
-            'materials' => $this->materials
-        ]);
-    }
-    public function index()
-    {
-        $products = Product::all(); // Fetch products from the database or wherever they are stored
-        return view('dashboard.shop.products', [
-            'products' => $this->products,
+            'categories' => $this->categoryService->getAllCategories(),
+            'sizes' => $this->sizeService->getAllSizes(),
+            'colors' => $this->colorService->getAllColors(),
+            'materials' => $this->materialService->getAllMaterials()
         ]);
     }
 
+    public function index()
+    {
+        $products = $this->productService->getAllProducts();
+        return view('dashboard.shop.products', [
+            'products' => $products,
+        ]);
+    }
 }
