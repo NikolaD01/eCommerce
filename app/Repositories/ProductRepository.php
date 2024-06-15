@@ -25,6 +25,11 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->model::find($id);
     }
 
+    public function getByIdWithRelations($id)
+    {
+        return $this->model::with('colors', 'sizes', 'materials', 'categories')->find($id);
+    }
+
     public function delete($id)
     {
         return $this->model::destroy($id);

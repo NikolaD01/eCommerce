@@ -25,6 +25,10 @@ class ProductService
         return $this->productRepository->getById($id);
     }
 
+    public function getProductWithRelations($id)
+    {
+        return $this->productRepository->getByIdWithRelations($id);
+    }
     public function deleteProduct($id)
     {
         return $this->productRepository->delete($id);

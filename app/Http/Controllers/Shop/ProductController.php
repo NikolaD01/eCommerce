@@ -31,7 +31,7 @@ class ProductController extends Controller
     }
 
     public function show($id) {
-        $product = $this->productService->getProduct($id);
+        $product = $this->productService->getProductWithRelations($id);
         return view('dashboard.shop.product.index', [
             'product' => $product,
             'categories' => $this->categoryService->getAllCategories(),
