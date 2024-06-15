@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+
+use App\Interfaces\ProductRepositoryInterface;
 use App\Interfaces\BaseRepositoryInterface;
+
 use App\Repositories\ProductRepository;
 use App\Repositories\ColorRepository;
 use App\Repositories\SizeRepository;
@@ -25,7 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(BaseRepositoryInterface::class . '.product', ProductRepository::class);
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class, function ($app) {
+            return new ProductRepository(new \App\Models\Product());
+        });
         $this->app->bind(BaseRepositoryInterface::class . '.color', ColorRepository::class);
         $this->app->bind(BaseRepositoryInterface::class . '.size', SizeRepository::class);
         $this->app->bind(BaseRepositoryInterface::class . '.material', MaterialRepository::class);
@@ -33,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
 
         // TODO: Resolve how to use services globaly
         $this->app->singleton(ProductService::class, function ($app) {
-            return new ProductService($app->make(BaseRepositoryInterface::class . '.product'));
+            return new ProductService($app->make(ProductRepositoryInterface::class));
         });
         $this->app->singleton(ColorService::class, function ($app) {
             return new ColorService($app->make(BaseRepositoryInterface::class . '.color'));

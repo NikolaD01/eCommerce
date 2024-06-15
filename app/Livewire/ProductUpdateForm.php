@@ -5,48 +5,63 @@ namespace App\Livewire;
 use App\Models\Category;
 use Livewire\Component;
 
+use App\Services\Shop\ProductService;
+
 class ProductUpdateForm extends Component
 {
+    protected $productService;
     public $data;
     public $product;
     public $title;
-    public $desc;
+    public $description;
     public $price;
-    public $category = [];
+    public $categories = [];
     public $materials = [];
     public $sizes = [];
     public $colors = [];
 
-    public function __construct()
-    {
-    }
+    protected $rules =  [ 'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'categories' => 'required|array',
+        'materials' => 'required|array',
+        'sizes' => 'required|array',
+        'colors' => 'required|array',];
 
+    public function __construct($id = null)
+    {
+        $this->productService = app(ProductService::class);
+    }
     public function save()
     {
-        $this->validate([
-            'title' => 'required|string|max:255',
-            'desc' => 'required|string',
-            'price' => 'required|numeric',
-            'category' => 'required|array',
-            'materials' => 'required|array',
-            'sizes' => 'required|array',
-            'colors' => 'required|array',
-        ]);
+        $this->validate();
 
         $data = [
             'title' => $this->title,
-            'desc' => $this->desc,
+            'description' => $this->description,
             'price' => $this->price,
-            'category' => $this->category,
+            'categories' => $this->categories,
             'materials' => $this->materials,
             'sizes' => $this->sizes,
             'colors' => $this->colors,
         ];
-        $this->productImport->handleData($data);
+
+        $message = $this->productService->updateProduct($this->data['product']->id, $data);
+
+
+        session()->flash('message', 'Product updated successfully!');
+
     }
     public function mount($data)
     {
-      $this->data = $data;
+        $this->data = $data;
+        $this->title = $data['product']->title;
+        $this->description = $data['product']->description;
+        $this->price = $data['product']->price;
+        $this->category = $data['product']->categories->pluck('id')->toArray();
+        $this->materials = $data['product']->materials->pluck('id')->toArray();
+        $this->sizes = $data['product']->sizes->pluck('id')->toArray();
+        $this->colors = $data['product']->colors->pluck('id')->toArray();
     }
     public function render()
     {

@@ -2,17 +2,19 @@
 
 namespace App\Services\Shop;
 
-use App\Interfaces\BaseRepositoryInterface;
+use App\Interfaces\ProductRepositoryInterface;
+use App\Models\Product;
+use App\Repositories\ProductRepository;
+use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
-    protected BaseRepositoryInterface $productRepository;
+    protected $productRepository;
 
-    public function __construct(BaseRepositoryInterface $productRepository)
+    public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
     }
-
     public function getAllProducts()
     {
         return $this->productRepository->getAll();
@@ -30,11 +32,33 @@ class ProductService
 
     public function createProduct(array $data)
     {
-        return $this->productRepository->create($data);
+        DB::beginTransaction();
+
+        try {
+            $product = $this->productRepository->create($data);
+            $this->productRepository->syncRelations($product, $data);
+
+            DB::commit();
+            return $product;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 
     public function updateProduct($id, array $data)
     {
-        return $this->productRepository->update($id, $data);
+        DB::beginTransaction();
+
+        try {
+            $product = $this->productRepository->update($id, $data);
+            $this->productRepository->syncRelations($product, $data);
+
+            DB::commit();
+            return $product;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 }

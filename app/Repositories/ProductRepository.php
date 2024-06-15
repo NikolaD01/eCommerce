@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\BaseRepositoryInterface;
+use App\Interfaces\ProductRepositoryInterface;
 use App\Models\Product;
 
-class ProductRepository implements BaseRepositoryInterface
+class ProductRepository implements ProductRepositoryInterface
 {
 
     protected Product $model;
@@ -37,11 +37,34 @@ class ProductRepository implements BaseRepositoryInterface
 
     public function update($id, array $data)
     {
-        $color = $this->model::find($id);
-        if ($color) {
-            $color->save($data);
-            return $color;
+        $product = $this->model::find($id);
+        if ($product) {
+            $product->title = $data['title'];
+            $product->description = $data['description'];
+            $product->price = $data['price'];
+            $product->save();
+            return $product;
         }
         return null;
+    }
+    public function syncRelations($product, array $data)
+    {
+        if (isset($data['colors'])) {
+            $product->colors()->sync($data['colors']);
+        }
+
+        if (isset($data['categories'])) {
+            $product->categories()->sync($data['categories']);
+        }
+
+        if (isset($data['materials'])) {
+            $product->materials()->sync($data['materials']);
+        }
+
+        if (isset($data['sizes'])) {
+            $product->sizes()->sync($data['sizes']);
+        }
+
+        return $product;
     }
 }
