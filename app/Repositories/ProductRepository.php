@@ -37,7 +37,8 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->save($data);
+        $data['thumbnail_id'] = 1;
+        return $this->model::create($data);
     }
 
     public function update($id, array $data)

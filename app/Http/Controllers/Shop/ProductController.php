@@ -42,7 +42,11 @@ class ProductController extends Controller
     }
     public function create()
     {
-        return view('dashboard.shop.product.create');
+        return view('dashboard.shop.product.create', ['categories' => $this->categoryService->getAllCategories(),
+            'sizes' => $this->sizeService->getAllSizes(),
+            'colors' => $this->colorService->getAllColors(),
+            'materials' => $this->materialService->getAllMaterials()
+        ]);
     }
     public function index()
     {
