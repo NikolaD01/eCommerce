@@ -29,7 +29,10 @@ export default {
       'focus:ring-red-300',
       'bg-white-500',
       'focus:ring-white-300',
-
+      'bg-indigo-500',
+      'focus:ring-indigo-300',
+      'bg-teal-500',
+      'focus:ring-teal-300',
 
     ],
 

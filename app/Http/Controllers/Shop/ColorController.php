@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Services\Shop\ColorService;
 
 class ColorController extends Controller
 {
-    private $colors;
+    private $colorService;
 
-    public function __construct()
+    public function __construct(colorService $colorService)
     {
-        parent::__construct();
-        $this->colors = $this->shopData->getAllColors();
+        $this->colorService = $colorService;
     }
 
     public function index()
     {
-        return view('dashboard.shop.colors', ['colors' => $this->colors]);
+        $colors = $this->colorService->getAllColors();
+        return view('dashboard.shop.colors', ['colors' => $colors]);
     }
 }

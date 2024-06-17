@@ -1,8 +1,9 @@
     @foreach($products as $product)
-        <a class="" href="{{route('products.show', ['product' => $product->id])}}">
-            <div class="relative h-[430px] overflow-hidden rounded-xl">
+        <a class=" " href="{{route('products.show', ['product' => $product->id])}}">
+            <div class="hover:shadow-xl relative h-[430px] overflow-hidden rounded-xl">
                 <img alt="coverImage" loading="lazy" width="1000" height="1000" decoding="async" data-nimg="1" class="h-full w-full object-cover object-top"
-                     style="color:transparent" src="https://ben10hero.com/wp-content/uploads/2016/07/cannonbolt_10k.png"></div>
+                     style="color:transparent" src="https://ben10hero.com/wp-content/uploads/2016/07/cannonbolt_10k.png">
+            </div>
             <div class="mt-5 space-y-1">
                 <div class="flex items-center justify-between">
                     <p class="text-2xl font-medium" >{{$product->title}}</p>

@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Services\Shop\MaterialService;
 
 class MaterialController extends Controller
 {
     private $materials;
-    public function __construct()
+    private $materialService;
+    public function __construct(MaterialService $materialService)
     {
-        parent::__construct();
-        $this->materials = $this->shopData->getAllMaterials();
+        $this->materialService = $materialService;
+        $this->materials = $this->materialService->getAllMaterials();
     }
 
     public function index()

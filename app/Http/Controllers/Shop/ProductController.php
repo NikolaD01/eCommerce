@@ -40,7 +40,10 @@ class ProductController extends Controller
             'materials' => $this->materialService->getAllMaterials()
         ]);
     }
-
+    public function create()
+    {
+        return view('dashboard.shop.product.create');
+    }
     public function index()
     {
         $products = $this->productService->getAllProducts();

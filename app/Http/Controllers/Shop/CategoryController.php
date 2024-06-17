@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
-use App\Services\Shop\ShopData;
+use App\Services\Shop\CategoryService;
 
 class CategoryController extends Controller
 {
     private $categories;
+    private $categoryService;
 
-    public function __construct()
+    public function __construct(CategoryService $categoryService)
     {
-        parent::__construct();
-        $this->categories = $this->shopData->getAllCategories();
+        $this->categoryService = $categoryService;
+        $this->categories = $this->categoryService->getAllCategories();
     }
 
     public function show($id)
     {
-        $category = $this->shopData->getCategory($id);
+        $category = $this->categoryService->getCategory($id);
         return view('dashboard.shop.category.index', ['category' => $category]);
     }
     public function index()

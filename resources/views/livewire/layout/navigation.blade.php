@@ -57,6 +57,15 @@ new class extends Component
                                 <x-dropdown-link :href="route('categories.index')" wire:navigate>
                                     {{ __('Categories') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link :href="route('materials.index')" wire:navigate>
+                                    {{ __('Materials') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('colors.index')" wire:navigate>
+                                    {{ __('Colors') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('sizes.index')" wire:navigate>
+                                    {{ __('Sizes') }}
+                                </x-dropdown-link>
                                 <x-dropdown-link :href="route('orders')" wire:navigate>
                                     {{ __('Orders') }}
                                 </x-dropdown-link>

@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Services\Shop\SizeService;
 
 class SizeController extends Controller
 {
-    private $sizes;
+    private $sizeService;
 
-    public function __construct()
+    public function __construct(SizeService $sizeService)
     {
-        parent::__construct();
-        $this->sizes = $this->shopData->getAllSizes();
+        $this->sizeService = $sizeService;
     }
 
     public function index()
     {
-            return view('dashboard.shop.sizes', ['sizes' => $this->sizes]);
+            return view('dashboard.shop.sizes', ['sizes' => $this->sizeService->getAllSizes()]);
     }
 }

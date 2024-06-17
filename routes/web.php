@@ -1,8 +1,14 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\Shop\CategoryController;
+use App\Http\Controllers\Shop\MaterialController;
+use App\Http\Controllers\Shop\SizeController;
+use App\Http\Controllers\Shop\ColorController;
+
 use App\Http\Controllers\Shop\OrderController;
 
 Route::view('/', 'welcome');
@@ -15,7 +21,9 @@ Route::prefix('dashboard')->group(function () {
 
        Route::resource('products', ProductController::class);
        Route::resource('categories', CategoryController::class);
-
+       Route::resource('materials', MaterialController::class);
+       Route::resource('colors', ColorController::class);
+       Route::resource('sizes', SizeController::class);
 
        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
