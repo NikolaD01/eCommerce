@@ -9,12 +9,17 @@ class MaterialController extends Controller
 {
     private $materials;
     private $materialService;
-    public function __construct(MaterialService $materialService)
+    public function __construct()
     {
-        $this->materialService = $materialService;
+        $this->materialService = app(MaterialService::class);
         $this->materials = $this->materialService->getAllMaterials();
     }
 
+    public function destroy($id)
+    {
+        $this->materialService->deleteMaterial($id);
+        return redirect()->back();
+    }
     public function index()
     {
         return view('dashboard.shop.materials', ['materials' => $this->materials]);

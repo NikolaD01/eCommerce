@@ -12,7 +12,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        $this->categoryService = app(CategoryService::class);;
+        $this->categoryService = app(CategoryService::class);
         $this->categories = $this->categoryService->getAllCategories();
     }
 
