@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\Category;
 use Livewire\Component;
 
 use App\Services\Shop\ProductService;

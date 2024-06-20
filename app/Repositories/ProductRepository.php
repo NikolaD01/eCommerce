@@ -32,7 +32,15 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function delete($id)
     {
-        return $this->model::destroy($id);
+        $product = $this->getByIdWithRelations($id);
+
+        if ($product) {
+            $product->colors()->detach();
+            $product->sizes()->detach();
+            $product->materials()->detach();
+            $product->categories()->detach();
+        }
+        return $product->delete();
     }
 
     public function create(array $data)

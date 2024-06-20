@@ -1,4 +1,5 @@
 <form wire:submit.prevent="save" class="w-1/2">
+    @csrf
     @if (session()->has('message'))
         <div class="alert alert-success">
             {{ session('message') }}

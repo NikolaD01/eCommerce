@@ -40,6 +40,12 @@ class ProductController extends Controller
             'materials' => $this->materialService->getAllMaterials()
         ]);
     }
+
+    public function destroy($id)
+    {
+        $product = $this->productService->deleteProduct($id);
+        return redirect(route('products.index'))->with('success', "Product Deleted Successfully");
+    }
     public function create()
     {
         return view('dashboard.shop.product.create', ['categories' => $this->categoryService->getAllCategories(),

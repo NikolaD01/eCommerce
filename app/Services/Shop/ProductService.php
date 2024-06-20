@@ -3,8 +3,6 @@
 namespace App\Services\Shop;
 
 use App\Interfaces\ProductRepositoryInterface;
-use App\Models\Product;
-use App\Repositories\ProductRepository;
 use Illuminate\Support\Facades\DB;
 
 class ProductService
