@@ -10,12 +10,17 @@ class CategoryController extends Controller
     private $categories;
     private $categoryService;
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct()
     {
-        $this->categoryService = $categoryService;
+        $this->categoryService = app(CategoryService::class);;
         $this->categories = $this->categoryService->getAllCategories();
     }
 
+    public function destroy($id)
+    {
+        $this->categoryService->deleteCategory($id);
+        return redirect()->back();
+    }
     public function show($id)
     {
         $category = $this->categoryService->getCategory($id);

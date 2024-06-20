@@ -33,7 +33,7 @@ class CategoryRepository implements BaseRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->save($data);
+        return $this->model::create($data);
     }
 
     public function update($id, array $data)
