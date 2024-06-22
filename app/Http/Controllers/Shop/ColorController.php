@@ -9,11 +9,16 @@ class ColorController extends Controller
 {
     private $colorService;
 
-    public function __construct(colorService $colorService)
+    public function __construct()
     {
-        $this->colorService = $colorService;
+        $this->colorService = app(ColorService::class);
     }
 
+    public function destroy($color)
+    {
+            $this->colorService->deleteColor($color);
+            return redirect()->back()->with('message', 'Color deleted successfully');
+    }
     public function index()
     {
         $colors = $this->colorService->getAllColors();

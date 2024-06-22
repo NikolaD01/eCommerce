@@ -31,7 +31,7 @@ class MaterialsUpdateForm extends Component
 
         $this->materialService->createMaterial($data);
         redirect(route('materials.index'));
-        return session()->flash('message', 'Category crated successfully!');
+        return session()->flash('message', 'Category created successfully!');
     }
     public function render()
     {
