@@ -5,9 +5,4 @@ use App\Services\Shop\ShopData;
 
 abstract class Controller
 {
-
-    public function __construct()
-    {
-    }
-    //
 }

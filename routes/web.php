@@ -9,6 +9,8 @@ use App\Http\Controllers\Shop\MaterialController;
 use App\Http\Controllers\Shop\SizeController;
 use App\Http\Controllers\Shop\ColorController;
 
+use App\Http\Controllers\Media\MediaController;
+
 use App\Http\Controllers\Shop\OrderController;
 
 Route::view('/', 'welcome');
@@ -24,6 +26,8 @@ Route::prefix('dashboard')->group(function () {
        Route::resource('materials', MaterialController::class);
        Route::resource('colors', ColorController::class);
        Route::resource('sizes', SizeController::class);
+
+       Route::resource('images', MediaController::class);
 
        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 

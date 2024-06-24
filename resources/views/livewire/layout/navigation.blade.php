@@ -73,6 +73,9 @@ new class extends Component
                             </x-slot>
                         </x-dropdown>
                     </div>
+                    <x-nav-link :href="route('images.index')" wire:navigate>
+                        {{ __('Medias') }}
+                    </x-nav-link>
                 </div>
             </div>
 

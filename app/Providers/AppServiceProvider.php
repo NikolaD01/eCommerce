@@ -19,6 +19,9 @@ use App\Services\Shop\SizeService;
 use App\Services\Shop\MaterialService;
 use App\Services\Shop\CategoryService;
 
+use App\Repositories\MediaRepository;
+use App\Services\Media\MediaService;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -28,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(BaseRepositoryInterface::class . '.media', MediaRepository::class);
+
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class, function ($app) {
             return new ProductRepository(new \App\Models\Product());
         });
@@ -36,7 +41,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BaseRepositoryInterface::class . '.material', MaterialRepository::class);
         $this->app->bind(BaseRepositoryInterface::class . '.category', CategoryRepository::class);
 
-        // TODO: Resolve how to use services globaly
+        $this->app->singleton(MediaService::class, function ($app) {
+            return new MediaService($app->make(BaseRepositoryInterface::class . '.media'));
+        });
+
         $this->app->singleton(ProductService::class, function ($app) {
             return new ProductService($app->make(ProductRepositoryInterface::class));
         });

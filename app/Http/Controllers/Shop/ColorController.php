@@ -7,7 +7,7 @@ use App\Services\Shop\ColorService;
 
 class ColorController extends Controller
 {
-    private $colorService;
+    private $colorService ;
 
     public function __construct()
     {

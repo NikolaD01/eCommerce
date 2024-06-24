@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('medias', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('color_id')->constrained('colors')->onDelete('cascade');
             $table->text('alt')->nullable();
             $table->text('path');
             $table->tinyText('extension');
