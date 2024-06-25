@@ -9,7 +9,7 @@ use App\Models\Media;
 class MediaRepository implements BaseRepositoryInterface
 {
 
-    protected Category $model;
+    protected Media $model;
 
     public function __construct(Media $model)
     {

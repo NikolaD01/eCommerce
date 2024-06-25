@@ -28,7 +28,8 @@
                     <input id="dropzone-file" type="file" class="hidden" wire:model="file" />
                 </label>
             </div>
+            <button type="submit" class="bg-sky-500 hover:bg-sky-700 p-2 rounded text-white font-bold">Save</button>
+
         </form>
-        <button type="submit" class="bg-sky-500 hover:bg-sky-700 p-2 rounded text-white font-bold">Save</button>
     </div>
 </div>

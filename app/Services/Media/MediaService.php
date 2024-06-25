@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Media;
+use App\Interfaces\BaseRepositoryInterface;
 
 use Illuminate\Support\Facades\File;
 
@@ -31,8 +32,8 @@ class MediaService
     public function createMedia(array $data)
     {
         $fileData = $this->storefile($data['file']);
-        $data[] = $fileData;
-
+        $data['path'] = $fileData['path'];
+        $data['extension'] = $fileData['extension'];
         return $this->mediaRepository->create($data);
     }
     public function updateMedia($id, array $data)

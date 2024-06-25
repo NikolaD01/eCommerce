@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Media;
+namespace App\Livewire;
 
 use App\Services\Media\MediaService;
 use Livewire\Component;
@@ -26,10 +26,12 @@ class MediaForm extends Component
     public function __construct()
     {
         $this->mediaService = app(MediaService::class);
+
     }
 
     public function save()
     {
+
         $this->validate();
         $data = [
             'name' => $this->name,
@@ -44,7 +46,6 @@ class MediaForm extends Component
 
     public function render()
     {
-        dd($this->name);
-        return view('livewire.media.media-form');
+        return view('livewire.media-form');
     }
 }
