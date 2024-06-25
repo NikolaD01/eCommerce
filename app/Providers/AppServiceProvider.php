@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Interfaces\MediaRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 use App\Interfaces\ProductRepositoryInterface;
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(BaseRepositoryInterface::class . '.media', MediaRepository::class);
+        $this->app->bind(MediaRepositoryInterface::class , MediaRepository::class);
 
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class, function ($app) {
             return new ProductRepository(new \App\Models\Product());
@@ -42,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BaseRepositoryInterface::class . '.category', CategoryRepository::class);
 
         $this->app->singleton(MediaService::class, function ($app) {
-            return new MediaService($app->make(BaseRepositoryInterface::class . '.media'));
+            return new MediaService($app->make(MediaRepositoryInterface::class));
         });
 
         $this->app->singleton(ProductService::class, function ($app) {

@@ -11,4 +11,8 @@ class Media extends Model
 
     protected $table = 'medias';
     protected $fillable = ['name','alt','color_id', 'path', 'extension'];
+    public function color()
+    {
+        return $this->belongsTo(Color::class);
+    }
 }

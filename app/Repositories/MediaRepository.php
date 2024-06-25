@@ -3,10 +3,10 @@
 namespace App\Repositories;
 
 
-use App\Interfaces\BaseRepositoryInterface;
+use App\Interfaces\MediaRepositoryInterface;
 use App\Models\Media;
 
-class MediaRepository implements BaseRepositoryInterface
+class MediaRepository implements MediaRepositoryInterface
 {
 
     protected Media $model;
@@ -18,12 +18,16 @@ class MediaRepository implements BaseRepositoryInterface
 
     public function getAll()
     {
-        return $this->model::all();
+        return $this->model::with('color')->get();
     }
 
+    public function paginate($items, $paged)
+    {
+        return $this->model::with('color')->paginate($items, ['*'], 'page', $paged);
+    }
     public function getById($id)
     {
-        return $this->model::find($id);
+        return $this->model::with('color')->find($id);
     }
 
     public function delete($id)

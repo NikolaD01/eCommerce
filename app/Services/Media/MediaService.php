@@ -24,6 +24,10 @@ class MediaService
         return $this->mediaRepository->getById($id);
     }
 
+    public function paginate($items, $paged)
+    {
+        return $this->mediaRepository->paginate($items, $paged)->toArray();
+    }
     public function deleteMedia($id)
     {
         return $this->mediaRepository->delete($id);

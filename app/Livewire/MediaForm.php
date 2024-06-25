@@ -5,24 +5,22 @@ namespace App\Livewire;
 use App\Services\Media\MediaService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
 
 class MediaForm extends Component
 {
     use WithFileUploads;
 
-    public $name;
-    public $alt;
-    public $color_id;
+    #[Validate('required|string|max:225|min:4')]
+    public string $name;
+    #[Validate('nullable|string|max:225|min:4')]
+    public string $alt;
+    #[Validate('required|integer')]
+    public int $color_id;
+
+    #[Validate('required')]
     public $file;
-
-    protected $mediaService;
-    protected $rules = [
-        'name' => 'required|string|max:225|min:4',
-        'alt' =>  'nullable|string|max:225|min:4',
-        'color_id' => 'required|integer',
-        'file' => 'required'
-    ];
-
+    protected MediaService $mediaService;
     public function __construct()
     {
         $this->mediaService = app(MediaService::class);
@@ -41,6 +39,8 @@ class MediaForm extends Component
         ];
 
         $this->mediaService->createMedia($data);
+
+        $this->dispatch('refresh');
 
     }
 
