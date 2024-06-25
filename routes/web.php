@@ -27,7 +27,7 @@ Route::prefix('dashboard')->group(function () {
        Route::resource('colors', ColorController::class);
        Route::resource('sizes', SizeController::class);
 
-       Route::resource('images', MediaController::class);
+       Route::resource('medias', MediaController::class);
 
        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 

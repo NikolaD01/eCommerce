@@ -4,10 +4,17 @@ namespace App\Http\Controllers\Media;
 
 use App\Http\Controllers\Controller;
 use App\Models\Media;
+use App\Services\Media\MediaService;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller
 {
+    protected MediaService $mediaService;
+    public function __construct()
+    {
+        $this->mediaService = app(MediaService::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -43,7 +50,7 @@ class MediaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Media $media)
+    public function edit($media)
     {
         //
     }
@@ -59,8 +66,10 @@ class MediaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Media $media)
+    public function destroy(int $media)
     {
+        $this->mediaService->deleteMedia($media);
+        return back()->with('success', 'Media deleted');
         //
     }
 }

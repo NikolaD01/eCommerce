@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Medias;
 
 use App\Services\Media\MediaService;
 use Livewire\Component;
@@ -46,6 +46,6 @@ class MediaForm extends Component
 
     public function render()
     {
-        return view('livewire.media-form');
+        return view('livewire.medias.media-form');
     }
 }

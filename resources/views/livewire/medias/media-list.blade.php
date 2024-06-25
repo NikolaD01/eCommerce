@@ -18,9 +18,13 @@
                         <p><strong>Alt</strong> {{$media['alt']}}</p>
                     </div>
                 </div>
-                <div class="grid grid-cols-2">
-                    <button>Edit</button>
-                    <button>Delete</button>
+                <div class="grid grid-cols-2 gap-8">
+                    <a href="{{route('medias.edit', ['media' => $media['id']])}}" class=" text-center bg-sky-500 hover:bg-sky-700 p-2 rounded text-white font-bold">Edit</a>
+                    <form action="{{route('medias.destroy', ['media' => $media['id']])}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                    </form>
                 </div>
             </div>
         @endforeach

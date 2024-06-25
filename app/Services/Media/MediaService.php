@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Services\Media;
-use App\Interfaces\BaseRepositoryInterface;
+use App\Interfaces\MediaRepositoryInterface;
 
 use Illuminate\Support\Facades\File;
 
 class MediaService
 {
-    protected BaseRepositoryInterface $mediaRepository;
+    protected MediaRepositoryInterface $mediaRepository;
 
-    public function __construct(BaseRepositoryInterface $mediaRepository)
+    public function __construct(MediaRepositoryInterface $mediaRepository)
     {
         $this->mediaRepository = $mediaRepository;
     }
