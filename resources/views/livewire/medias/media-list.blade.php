@@ -3,7 +3,7 @@
         @foreach($medias['data'] as $media)
             <div class="flex flex-col justify-evenly shadow-xl ">
                 <img class="object-cover aspect-square h-1/2 w-full rounded-t-lg" alt="{{$media['alt']}}" src="{{asset('storage/'.$media['path'])}}">
-                <div class=" flex flex-col gap-3">
+                <div class=" flex flex-col gap-3 px-4">
                     <div class="grid grid-cols-2">
                         <p><strong>ID:</strong> {{$media['id']}}</p>
                         <p><strong>Name:</strong> {{$media['name']}}</p>
@@ -18,12 +18,12 @@
                         <p><strong>Alt</strong> {{$media['alt']}}</p>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-8">
+                <div class="grid grid-cols-2 gap-8 px-4">
                     <a href="{{route('medias.edit', ['media' => $media['id']])}}" class=" text-center bg-sky-500 hover:bg-sky-700 p-2 rounded text-white font-bold">Edit</a>
-                    <form action="{{route('medias.destroy', ['media' => $media['id']])}}" method="POST">
+                    <form class="flex w-full" action="{{route('medias.destroy', ['media' => $media['id']])}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                        <button class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                     </form>
                 </div>
             </div>

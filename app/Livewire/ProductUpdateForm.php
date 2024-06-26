@@ -50,7 +50,7 @@ class ProductUpdateForm extends Component
             $message = $this->productService->updateProduct($this->data['product']->id, $data);
 
             session()->flash('message', 'Product updated successfully!');
-            $this->dispatch('refresh');
+            return $this->dispatch('refresh');
         }
         else
         {
