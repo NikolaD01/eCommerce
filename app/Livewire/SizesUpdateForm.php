@@ -4,18 +4,14 @@ namespace App\Livewire;
 
 use App\Services\Shop\SizeService;
 use Livewire\Component;
-
+use Livewire\Attributes\Validate;
 class SizesUpdateForm extends Component
 {
-    public $name;
-    public $description;
-
-    protected $sizeService;
-    protected $rules = [
-        'name' => 'required',
-        'description' => 'required',
-    ];
-
+    #[Validate('required|string')]
+    public string $name;
+    #[Validate('required|string')]
+    public string $description;
+    protected sizeService $sizeService;
     public function __construct()
     {
         $this->sizeService = app(sizeService::class);

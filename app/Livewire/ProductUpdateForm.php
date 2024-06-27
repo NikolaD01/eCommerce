@@ -3,31 +3,32 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\Validate;
 
 use App\Services\Shop\ProductService;
 
 class ProductUpdateForm extends Component
 {
-    protected $productService;
-    public $data;
+    protected ProductService $productService;
+    public array $data;
     public $product;
-    public $title;
-    public $description;
-    public $price;
-    public $categories = [];
-    public $materials = [];
-    public $sizes = [];
-    public $colors = [];
 
-    protected $rules =  [ 'title' => 'required|string|max:255',
-        'description' => 'required|string',
-        'price' => 'required|numeric',
-        'categories' => 'required|array',
-        'materials' => 'required|array',
-        'sizes' => 'required|array',
-        'colors' => 'required|array',];
+    #[Validate('required|string|max:255')]
+    public string $title;
+    #[Validate('required|string')]
+    public string $description;
+    #[Validate('required|numeric')]
+    public int $price;
+    #[Validate('required|array')]
+    public array $categories = [];
+    #[Validate('required|array')]
+    public array $materials = [];
+    #[Validate('required|array')]
+    public array $sizes = [];
+    #[Validate('required|array')]
+    public array $colors = [];
 
-    public function __construct($id = null)
+    public function __construct()
     {
         $this->productService = app(ProductService::class);
     }
@@ -45,9 +46,9 @@ class ProductUpdateForm extends Component
             'colors' => $this->colors,
         ];
 
-        if(isset($this->data['product']))
+        if(isset($this->product))
         {
-            $message = $this->productService->updateProduct($this->data['product']->id, $data);
+            $message = $this->productService->updateProduct($this->product->id, $data);
 
             session()->flash('message', 'Product updated successfully!');
             return $this->dispatch('refresh');
@@ -64,15 +65,16 @@ class ProductUpdateForm extends Component
     public function mount($data)
     {
         $this->data = $data;
-        if(isset($data['product']))
+        if(isset($this->data['product']))
         {
-            $this->title = $data['product']->title;
-            $this->description = $data['product']->description;
-            $this->price = $data['product']->price;
-            $this->categories = $data['product']->categories->pluck('id')->toArray();
-            $this->materials = $data['product']->materials->pluck('id')->toArray();
-            $this->sizes = $data['product']->sizes->pluck('id')->toArray();
-            $this->colors = $data['product']->colors->pluck('id')->toArray();
+            $this->product = $data['product'];
+            $this->title =  $this->product->title;
+            $this->description =  $this->product->description;
+            $this->price =  $this->product->price;
+            $this->categories =  $this->product->categories->pluck('id')->toArray();
+            $this->materials =  $this->product->materials->pluck('id')->toArray();
+            $this->sizes =  $this->product->sizes->pluck('id')->toArray();
+            $this->colors =  $this->product->colors->pluck('id')->toArray();
         }
 
     }

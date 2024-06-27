@@ -5,17 +5,17 @@ namespace App\Livewire;
 
 use App\Services\Shop\ColorService;
 use Livewire\Component;
+use Livewire\Attributes\Validate;
 
 class ColorsUpdateForm extends Component
 {
 
-    public $name;
-    public $class;
-    protected $colorService;
-    protected $rules = [
-      'name' => 'required',
-      'class' => 'required',
-    ];
+    #[Validate('required|string')]
+    public string $name;
+
+    #[Validate('required|string')]
+    public string $class;
+    protected ColorService $colorService;
     public function __construct()
     {
         $this->colorService = app(ColorService::class);

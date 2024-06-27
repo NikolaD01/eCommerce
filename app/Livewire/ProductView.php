@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\App;
 class ProductView extends Component
 {
     public $product;
-    protected $productService;
+    protected productService $productService;
 
     public function mount($product)
     {

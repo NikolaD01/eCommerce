@@ -4,18 +4,18 @@ namespace App\Livewire;
 
 use App\Services\Shop\CategoryService;
 use Livewire\Component;
+use Livewire\Attributes\Validate;
 
 class CategoriesUpdateForm extends Component
 {
 
     public $categories;
 
-    public $category;
-    public $name;
-    protected $categoryService;
-    protected $rules = [
-        'name' => 'required',
-    ];
+    public int $category;
+
+    #[Validate('required|string')]
+    public string $name;
+    protected CategoryService $categoryService;
     public function __construct()
     {
         $this->categoryService = app(CategoryService::class);

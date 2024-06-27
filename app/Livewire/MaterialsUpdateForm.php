@@ -4,17 +4,16 @@ namespace App\Livewire;
 
 use App\Services\Shop\MaterialService;
 use Livewire\Component;
-
+use Livewire\Attributes\Validate;
 class MaterialsUpdateForm extends Component
 {
-    public $name;
-    public $description;
+    #[Validate('required|min:2')]
+    public string $name;
 
-    protected $materialService;
-    protected $rules = [
-        'name' => 'required|min:2',
-        'description' => 'required|min:2',
-    ];
+    #[Validate('required|min:2')]
+    public string $description;
+
+    protected MaterialService $materialService;
 
     public function __construct()
     {
