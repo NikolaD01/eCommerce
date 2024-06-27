@@ -8,7 +8,7 @@ use App\Services\Shop\CategoryService;
 class CategoryController extends Controller
 {
     private $categories;
-    private $categoryService;
+    private CategoryService $categoryService;
 
     public function __construct()
     {

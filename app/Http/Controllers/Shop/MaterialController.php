@@ -8,7 +8,7 @@ use App\Services\Shop\MaterialService;
 class MaterialController extends Controller
 {
     private $materials;
-    private $materialService;
+    private MaterialService $materialService;
     public function __construct()
     {
         $this->materialService = app(MaterialService::class);

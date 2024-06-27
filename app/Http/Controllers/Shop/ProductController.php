@@ -10,24 +10,18 @@ use App\Services\Shop\CategoryService;
 
 class ProductController extends Controller
 {
-    protected $productService;
-    protected $colorService;
-    protected $sizeService;
-    protected $materialService;
-    protected $categoryService;
+    protected ProductService $productService;
+    protected ColorService $colorService;
+    protected SizeService $sizeService;
+    protected MaterialService $materialService;
+    protected CategoryService $categoryService;
 
-    public function __construct(
-        ProductService $productService,
-        ColorService $colorService,
-        SizeService $sizeService,
-        MaterialService $materialService,
-        CategoryService $categoryService
-    ) {
-        $this->productService = $productService;
-        $this->colorService = $colorService;
-        $this->sizeService = $sizeService;
-        $this->materialService = $materialService;
-        $this->categoryService = $categoryService;
+    public function __construct() {
+        $this->productService = app(ProductService::class);
+        $this->colorService = app(ColorService::class);
+        $this->sizeService = app(SizeService::class);
+        $this->materialService = app(MaterialService::class);
+        $this->categoryService = app(CategoryService::class);
     }
 
     public function show($id) {

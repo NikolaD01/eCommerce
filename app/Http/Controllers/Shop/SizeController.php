@@ -7,7 +7,7 @@ use App\Services\Shop\SizeService;
 
 class SizeController extends Controller
 {
-    private $sizeService;
+    private sizeService $sizeService;
 
     public function __construct()
     {
