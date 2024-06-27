@@ -13,7 +13,7 @@
         </div>
         <div class="flex items-center gap-3">
             @foreach($product->categories as $category)
-                <a class="text-xl">{{$category->categoryName}}</a>
+                <a class="text-xl">{{$category->category_name}}</a>
             @endforeach
         </div>
         <div class="flex items-center justify-between">
