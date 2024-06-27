@@ -31,8 +31,7 @@ class ColorsUpdateForm extends Component
         ];
 
         $this->colorService->createColor($data);
-        redirect(route('colors.index'));
-        return session()->flash('message', 'Color created successfully');
+        return redirect(route('colors.index'))->with('message', 'Color created successfully');
     }
     public function render()
     {

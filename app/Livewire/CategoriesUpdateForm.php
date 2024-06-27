@@ -11,6 +11,7 @@ class CategoriesUpdateForm extends Component
 
     public $categories;
 
+    #[Validate('nullable')]
     public int $category;
 
     #[Validate('required|string')]
@@ -26,13 +27,27 @@ class CategoriesUpdateForm extends Component
     {
         $this->validate();
 
-        $data = [
-            'categoryName' => $this->name,
-            'parent_id' => $this->category,
-        ];
+        if(!isset($this->category))
+        {
+            $data = [
+                'category_name' => $this->name,
+            ];
+            $message = $this->categoryService->createCategory($data);
+            return redirect(route('categories.index'))->with('message', 'Category created successfully!');
+        }
+        else
+        {
+            $data = [
+                'category_name' => $this->name,
+                'category_id' => $this->category,
+            ];
+            $message = $this->categoryService->createCategory($data);
+            return redirect(route('categories.index'))->with('message', 'Category created successfully!');
+        }
 
-        $message = $this->categoryService->createCategory($data);
-        session()->flash('message', 'Category crated successfully!');
+
+
+
 
     }
     public function render()

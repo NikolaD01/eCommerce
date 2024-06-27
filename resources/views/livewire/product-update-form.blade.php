@@ -32,7 +32,7 @@
             wire:model="categories">
                 <option selected>Choose a category</option>
                 @foreach($data['categories'] as $category)
-                    <option value="{{$category->id}}">{{$category->categoryName}}</option>
+                    <option value="{{$category->id}}">{{$category->category_name}}</option>
                 @endforeach
             </select>
             @error('categories') <span class="error">{{ $message }}</span> @enderror

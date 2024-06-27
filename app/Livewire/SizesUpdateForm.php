@@ -27,8 +27,7 @@ class SizesUpdateForm extends Component
         ];
 
         $this->sizeService->createSize($data);
-        redirect(route('sizes.index'));
-        return session()->flash('message', 'Size created successfully');
+        return redirect(route('sizes.index'))->with('message', 'Size created successfully');
     }
 
     public function render()
