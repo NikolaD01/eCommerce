@@ -15,4 +15,9 @@ class Media extends Model
     {
         return $this->belongsTo(Color::class);
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'products_medias');
+    }
 }

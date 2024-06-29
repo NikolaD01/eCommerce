@@ -60,16 +60,6 @@
         </div>
         <div>
             <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple
-            wire:model="colors">
-                <option selected>Choose a sizes</option>
-                @foreach($data['colors'] as $color)
-                    <option value="{{$color->id}}">{{$color->name}}</option>
-                @endforeach
-            </select>
-            @error('colors') <span class="error">{{ $message }}</span> @enderror
-        </div>
-        <div>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " multiple
                     wire:model="medias">
                 <option selected>Choose a medias</option>
                 @foreach($data['medias'] as $media)

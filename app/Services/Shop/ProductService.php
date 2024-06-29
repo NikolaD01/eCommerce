@@ -17,7 +17,10 @@ class ProductService
     {
         return $this->productRepository->getAll();
     }
-
+    public function getAllProductsWithRelations()
+    {
+        return $this->productRepository->getAllWithRelations();
+    }
     public function getProduct($id)
     {
         return $this->productRepository->getById($id);
@@ -63,4 +66,6 @@ class ProductService
             throw $e;
         }
     }
+
+
 }

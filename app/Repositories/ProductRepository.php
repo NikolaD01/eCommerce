@@ -20,6 +20,16 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->model::all();
     }
 
+    public function getAllWithRelations()
+    {
+        return $this->model::with([
+            'medias.color',
+            'materials',
+            'categories',
+            'sizes',])->get();
+    }
+
+
     public function getById($id)
     {
         return $this->model::find($id);
@@ -27,7 +37,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getByIdWithRelations($id)
     {
-        return $this->model::with('colors', 'sizes', 'materials', 'categories','medias')->find($id);
+        return $this->model::with( 'sizes', 'materials', 'categories','medias')->find($id);
     }
 
     public function delete($id)
@@ -63,10 +73,6 @@ class ProductRepository implements ProductRepositoryInterface
     }
     public function syncRelations($product, array $data)
     {
-        if (isset($data['colors'])) {
-            $product->colors()->sync($data['colors']);
-        }
-
         if (isset($data['categories'])) {
             $product->categories()->sync($data['categories']);
         }
@@ -85,4 +91,6 @@ class ProductRepository implements ProductRepositoryInterface
 
         return $product;
     }
+
+
 }

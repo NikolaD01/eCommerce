@@ -8,4 +8,7 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
     public function syncRelations($product, array $data);
 
     public function getByIdWithRelations($id);
+
+    public function getAllWithRelations();
+
 }

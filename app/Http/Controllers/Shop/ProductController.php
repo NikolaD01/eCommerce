@@ -48,16 +48,15 @@ class ProductController extends Controller
     {
         return view('dashboard.shop.product.create', ['categories' => $this->categoryService->getAllCategories(),
             'sizes' => $this->sizeService->getAllSizes(),
-            'colors' => $this->colorService->getAllColors(),
             'materials' => $this->materialService->getAllMaterials(),
             'medias' => $this->mediaService->getAllMedias(),
         ]);
     }
     public function index()
     {
-        $products = $this->productService->getAllProducts();
-        return view('dashboard.shop.products', [
-            'products' => $products,
-        ]);
+
+
+        $products = $this->productService->getAllProductsWithRelations();
+        return view('dashboard.shop.products', compact('products'));
     }
 }

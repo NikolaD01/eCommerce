@@ -25,6 +25,15 @@ class MediaService
         return $this->mediaRepository->getById($id);
     }
 
+    public function getMediaByProduct($product)
+    {
+        return $this->mediaRepository->getByProduct($product);
+    }
+    public function getMediaColor($product, $color)
+    {
+        return $this->mediaRepository->getByColor($product, $color);
+    }
+
     public function paginate($items, $paged)
     {
         return $this->mediaRepository->paginate($items, $paged)->toArray();

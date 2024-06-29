@@ -30,6 +30,18 @@ class MediaRepository implements MediaRepositoryInterface
         return $this->model::with('color')->find($id);
     }
 
+    public function getByProduct($product)
+    {
+        return $this->model::whereHas('products', function ($query) use ($product) {
+            $query->where('product_id', $product);
+        })->get();
+    }
+    public function getByColor($product, $color)
+    {
+        return $this->model::whereHas('products', function ($query) use ($product) {
+            $query->where('product_id', $product);
+        })->where('color_id', $color)->get();    }
+
     public function delete($id)
     {
         return $this->model::destroy($id);
