@@ -38,8 +38,11 @@ class MediaForm extends Component
             'file' => $this->file
         ];
 
-        $this->mediaService->createMedia($data);
-
+        $media = $this->mediaService->createMedia($data);
+        if(isset($media['message']))
+        {
+            session()->flash('message',$media['message']);
+        }
         $this->dispatch('refresh');
 
     }

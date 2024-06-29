@@ -37,6 +37,13 @@ class MediaRepository implements MediaRepositoryInterface
 
     public function create(array $data)
     {
+        if (isset($data['path'])) {
+        $filePath = $data['path'];
+        $existingFile = $this->model::where('path', $filePath)->first();
+        if ($existingFile) {
+            return ['message' => 'File already exists'];
+        }
+    }
         return $this->model::create($data);
     }
 

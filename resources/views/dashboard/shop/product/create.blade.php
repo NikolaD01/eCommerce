@@ -3,5 +3,6 @@
     'categories' => $categories,
     'materials' => $materials,
     'sizes' => $sizes,
-    'colors' => $colors]"/>
+    'colors' => $colors,
+    'medias' => $medias]"/>
 </x-app-layout>

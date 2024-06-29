@@ -38,5 +38,12 @@
             <button type="submit" class="bg-sky-500 hover:bg-sky-700 p-2 rounded text-white font-bold">Save</button>
 
         </form>
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            @if (session()->has('message'))
+                <div class="font-bold text-xl">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
     </div>
 </div>

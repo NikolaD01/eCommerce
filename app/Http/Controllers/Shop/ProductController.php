@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Services\Media\MediaService;
 use App\Services\Shop\ProductService;
 use App\Services\Shop\ColorService;
 use App\Services\Shop\SizeService;
@@ -15,6 +16,7 @@ class ProductController extends Controller
     protected SizeService $sizeService;
     protected MaterialService $materialService;
     protected CategoryService $categoryService;
+    protected MediaService $mediaService;
 
     public function __construct() {
         $this->productService = app(ProductService::class);
@@ -22,6 +24,7 @@ class ProductController extends Controller
         $this->sizeService = app(SizeService::class);
         $this->materialService = app(MaterialService::class);
         $this->categoryService = app(CategoryService::class);
+        $this->mediaService = app(MediaService::class);
     }
 
     public function show($id) {
@@ -31,7 +34,8 @@ class ProductController extends Controller
             'categories' => $this->categoryService->getAllCategories(),
             'sizes' => $this->sizeService->getAllSizes(),
             'colors' => $this->colorService->getAllColors(),
-            'materials' => $this->materialService->getAllMaterials()
+            'materials' => $this->materialService->getAllMaterials(),
+            'medias' => $this->mediaService->getAllMedias(),
         ]);
     }
 
@@ -45,7 +49,8 @@ class ProductController extends Controller
         return view('dashboard.shop.product.create', ['categories' => $this->categoryService->getAllCategories(),
             'sizes' => $this->sizeService->getAllSizes(),
             'colors' => $this->colorService->getAllColors(),
-            'materials' => $this->materialService->getAllMaterials()
+            'materials' => $this->materialService->getAllMaterials(),
+            'medias' => $this->mediaService->getAllMedias(),
         ]);
     }
     public function index()

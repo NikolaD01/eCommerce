@@ -30,4 +30,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Material::class, 'material_product');
     }
+
+    public function medias()
+    {
+        return $this->belongsToMany(Media::class, 'products_medias');
+    }
 }

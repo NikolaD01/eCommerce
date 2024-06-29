@@ -27,7 +27,8 @@ class ProductUpdateForm extends Component
     public array $sizes = [];
     #[Validate('required|array')]
     public array $colors = [];
-
+    #[Validate('required|array')]
+    public array $medias = [];
     public function __construct()
     {
         $this->productService = app(ProductService::class);
@@ -44,6 +45,7 @@ class ProductUpdateForm extends Component
             'materials' => $this->materials,
             'sizes' => $this->sizes,
             'colors' => $this->colors,
+            'medias' => $this->medias
         ];
 
         if(isset($this->product))
@@ -75,8 +77,8 @@ class ProductUpdateForm extends Component
             $this->materials =  $this->product->materials->pluck('id')->toArray();
             $this->sizes =  $this->product->sizes->pluck('id')->toArray();
             $this->colors =  $this->product->colors->pluck('id')->toArray();
+            $this->medias =  $this->product->medias->pluck('id')->toArray();
         }
-
     }
     public function render()
     {

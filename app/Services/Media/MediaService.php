@@ -4,6 +4,7 @@ namespace App\Services\Media;
 use App\Interfaces\MediaRepositoryInterface;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class MediaService
 {
@@ -47,8 +48,23 @@ class MediaService
 
     public function storeFile($file)
     {
-        $path = $file->store('uploads', 'public');
-        $extension = File::extension($path);
-        return ['path' => $path , 'extension' => $extension];
+        $fileHash = md5_file($file->getRealPath());
+        $directory = 'uploads';
+        $existingFile = collect(Storage::disk('public')->allFiles($directory))
+            ->first(function ($filePath) use ($fileHash) {
+                return $fileHash === md5_file(Storage::disk('public')->path($filePath));
+            });
+
+        if (!$existingFile)
+        {
+            $path = $file->store($directory, 'public');
+            $extension = File::extension($path);
+            return ['path' => $path, 'extension' => $extension];
+        }
+        else
+        {
+            $extension = File::extension($existingFile);
+            return ['path' => $existingFile, 'extension' => $extension];
+        }
     }
 }
