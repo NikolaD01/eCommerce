@@ -30,4 +30,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Media::class, 'products_medias');
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
+    }
 }

@@ -48,9 +48,6 @@ new class extends Component
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('shop')" wire:navigate>
-                                    {{ __('Shop') }}
-                                </x-dropdown-link>
                                 <x-dropdown-link :href="route('products.index')" wire:navigate>
                                     {{ __('Products') }}
                                 </x-dropdown-link>
@@ -66,13 +63,16 @@ new class extends Component
                                 <x-dropdown-link :href="route('sizes.index')" wire:navigate>
                                     {{ __('Sizes') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('orders')" wire:navigate>
-                                    {{ __('Orders') }}
-                                </x-dropdown-link>
 
                             </x-slot>
                         </x-dropdown>
                     </div>
+                    <x-nav-link :href="route('medias.index')" wire:navigate>
+                        {{ __('Orders') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('medias.index')" wire:navigate>
+                        {{ __('Costumers') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('medias.index')" wire:navigate>
                         {{ __('Medias') }}
                     </x-nav-link>
