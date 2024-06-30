@@ -2,24 +2,40 @@
 
 namespace App\Providers;
 
-use App\Interfaces\MediaRepositoryInterface;
+
+use App\Services\User\UserDataService;
 use Illuminate\Support\ServiceProvider;
 
-use App\Interfaces\ProductRepositoryInterface;
 use App\Interfaces\BaseRepositoryInterface;
 
-use App\Repositories\ProductRepository;
-use App\Repositories\ColorRepository;
-use App\Repositories\SizeRepository;
-use App\Repositories\MaterialRepository;
-use App\Repositories\CategoryRepository;
+//User Data
+use App\Interfaces\UserDataRepositoryInterface;
+use App\Repositories\UserDataRepository;
 
+//Product
+use App\Interfaces\ProductRepositoryInterface;
+use App\Repositories\ProductRepository;
 use App\Services\Shop\ProductService;
+
+//Color
+use App\Repositories\ColorRepository;
 use App\Services\Shop\ColorService;
+
+//Size
+use App\Repositories\SizeRepository;
 use App\Services\Shop\SizeService;
+
+//Material
+use App\Repositories\MaterialRepository;
 use App\Services\Shop\MaterialService;
+
+//Category
+use App\Repositories\CategoryRepository;
 use App\Services\Shop\CategoryService;
 
+
+//Media
+use App\Interfaces\MediaRepositoryInterface;
 use App\Repositories\MediaRepository;
 use App\Services\Media\MediaService;
 
@@ -33,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(MediaRepositoryInterface::class , MediaRepository::class);
-
+        $this->app->bind(UserDataRepositoryInterface::class, UserDataRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class, function ($app) {
             return new ProductRepository(new \App\Models\Product());
         });
@@ -41,6 +57,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BaseRepositoryInterface::class . '.size', SizeRepository::class);
         $this->app->bind(BaseRepositoryInterface::class . '.material', MaterialRepository::class);
         $this->app->bind(BaseRepositoryInterface::class . '.category', CategoryRepository::class);
+
+        $this->app->singleton(UserDataService::class, function ($app) {
+            return new UserDataService($app->make(UserDataRepositoryInterface::class));
+        });
 
         $this->app->singleton(MediaService::class, function ($app) {
             return new MediaService($app->make(MediaRepositoryInterface::class));
