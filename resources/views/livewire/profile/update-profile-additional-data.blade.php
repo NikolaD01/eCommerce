@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <form wire:submit="" class="mt-6 space-y-6">
+    <form wire:submit="updateUserData" class="mt-6 space-y-6">
         <div>
             <x-input-label for="city" :value="__('City')" />
             <x-text-input wire:model="city" id="city" name="city" type="text" class="mt-1 block w-full" required autocomplete="address-level2" />
@@ -40,7 +40,7 @@
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
-            <x-action-message class="me-3" on="profile-updated">
+            <x-action-message class="me-3" on="profile-data-updated">
                 {{ __('Saved.') }}
             </x-action-message>
         </div>

@@ -28,7 +28,7 @@ class UserDataRepository implements UserDataRepositoryInterface
 
     public function findByUserId($user)
     {
-        return $this->model::where('user_id', $user->id)->first();
+        return $this->model::where('user_id', $user)->first();
     }
 
     public function delete($id)
@@ -45,6 +45,11 @@ class UserDataRepository implements UserDataRepositoryInterface
     {
         $userData = $this->model::find($id);
         if ($userData) {
+            $userData->city = $data['city'];
+            $userData->region = $data['region'];
+            $userData->address = $data['address'];
+            $userData->post_code = $data['post_code'];
+            $userData->phone_number = $data['phone_number'];
             $userData->save($data);
             return $userData;
         }

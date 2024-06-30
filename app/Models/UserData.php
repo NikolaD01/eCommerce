@@ -12,6 +12,7 @@ class UserData extends Model
     protected $fillable = [
         'user_id',
         'city',
+        'region',
         'address',
         'post_code',
         'phone_number'

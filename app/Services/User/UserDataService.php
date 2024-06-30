@@ -3,7 +3,6 @@
 namespace App\Services\User;
 
 use App\Interfaces\UserDataRepositoryInterface;
-use Illuminate\Support\Facades\File;
 
 class UserDataService
 {
@@ -22,6 +21,11 @@ class UserDataService
     public function getUserData($id)
     {
         return $this->userDataRepository->getById($id);
+    }
+
+    public function getByUserId($user)
+    {
+        return $this->userDataRepository->findByUserId($user);
     }
 
     public function deleteUserData($id)
