@@ -1,7 +1,8 @@
-<div class="product-container w-1/2 shadow-2xl" >
-    <div class="relative h-[430px] overflow-hidden rounded-xl object-cover	">
+<div class="product-container" >
+    <a class="relative h-[430px] overflow-hidden rounded-xl object-cover" href="">
         <img alt="coverImage" loading="lazy" width="1000" height="1000" decoding="async" data-nimg="1" class="h-full w-full object-cover object-top"
-             style="color:transparent" src="{{asset('storage/'.$media->path)}}"></div>
+             style="color:transparent" src="{{asset('storage/'.$media->path)}}">
+    </a>
     <div class="mt-5 space-y-1 p-4 ">
         <div class="flex items-center justify-between">
             <a class="text-2xl font-medium" href="/products/brown-coat">{{$product->title}}</a>

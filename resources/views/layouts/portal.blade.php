@@ -13,17 +13,16 @@
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-200 antialiased font-sans">
+<body class="bg-white antialiased font-sans">
     <header class="bg-white grid grid-cols-2 items-center gap-2 py-6 lg:grid-cols-3">
         @if (Route::has('login'))
-            <livewire:welcome.navigation />
         @endif
     </header>
-    <main>
-        {{$slot}}
+    <main class="">
+        <div class="container m-auto flex flex-col gap-32 ">
+            {{$slot}}
+        </div>
     </main>
-    <footer class="fixed bottom-0 left-0 w-full py-10 bg-sky-950	 text-center text-sm text-white dark:text-white/70">
-        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-    </footer>
+    @include('components.footer.default')
 </body>
 </html>

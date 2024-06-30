@@ -1,19 +1,27 @@
 <?php
 
 
+use App\Http\Controllers\Dashboard\Media\MediaController;
+use App\Http\Controllers\Dashboard\Shop\CategoryController;
+use App\Http\Controllers\Dashboard\Shop\ColorController;
+use App\Http\Controllers\Dashboard\Shop\MaterialController;
+use App\Http\Controllers\Portal\OrderController;
+use App\Http\Controllers\Dashboard\Shop\ProductController;
+use App\Http\Controllers\Dashboard\Shop\SizeController;
+
+use App\Http\Controllers\Portal\PortalProductController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Shop\ProductController;
-use App\Http\Controllers\Shop\CategoryController;
-use App\Http\Controllers\Shop\MaterialController;
-use App\Http\Controllers\Shop\SizeController;
-use App\Http\Controllers\Shop\ColorController;
+Route::prefix('/')->group(function () {
+    Route::view('/', 'welcome')->name('home');
+    Route::controller(OrderController::class)->group(function () {
+    });
+    Route::controller(PortalProductController::class)->group(function () {
+        Route::get('products', 'index')->name('products.index');
+    });
+});
 
-use App\Http\Controllers\Media\MediaController;
 
-use App\Http\Controllers\Shop\OrderController;
-
-Route::view('/', 'welcome');
 
 Route::prefix('dashboard')->group(function () {
    Route::view('/', 'dashboard')->name('dashboard');
@@ -21,16 +29,13 @@ Route::prefix('dashboard')->group(function () {
    Route::prefix('shop')->group(function () {
        Route::view('/', 'dashboard.shop.index')->name('shop');
 
-       Route::resource('products', ProductController::class);
+       Route::resource('products', PortalProductController::class);
        Route::resource('categories', CategoryController::class);
        Route::resource('materials', MaterialController::class);
        Route::resource('colors', ColorController::class);
        Route::resource('sizes', SizeController::class);
 
        Route::resource('medias', MediaController::class);
-
-       Route::get('/orders', [OrderController::class, 'index'])->name('orders');
-
    });
 })->middleware(['auth', 'verified']);
 

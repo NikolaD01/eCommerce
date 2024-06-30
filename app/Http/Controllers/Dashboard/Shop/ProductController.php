@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Controllers\Shop;
+namespace App\Http\Controllers\Dashboard\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Services\Media\MediaService;
-use App\Services\Shop\ProductService;
-use App\Services\Shop\ColorService;
-use App\Services\Shop\SizeService;
-use App\Services\Shop\MaterialService;
 use App\Services\Shop\CategoryService;
+use App\Services\Shop\ColorService;
+use App\Services\Shop\MaterialService;
+use App\Services\Shop\ProductService;
+use App\Services\Shop\SizeService;
 
 class ProductController extends Controller
 {
