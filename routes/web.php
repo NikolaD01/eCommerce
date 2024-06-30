@@ -17,7 +17,8 @@ Route::prefix('/')->group(function () {
     Route::controller(OrderController::class)->group(function () {
     });
     Route::controller(PortalProductController::class)->group(function () {
-        Route::get('products', 'index')->name('products.index');
+        Route::get('products', 'index')->name('portal.products.index');
+        Route::get('products/{product}', 'show')->name('portal.products.show');
     });
 });
 
@@ -29,7 +30,7 @@ Route::prefix('dashboard')->group(function () {
    Route::prefix('shop')->group(function () {
        Route::view('/', 'dashboard.shop.index')->name('shop');
 
-       Route::resource('products', PortalProductController::class);
+       Route::resource('products', ProductController::class);
        Route::resource('categories', CategoryController::class);
        Route::resource('materials', MaterialController::class);
        Route::resource('colors', ColorController::class);

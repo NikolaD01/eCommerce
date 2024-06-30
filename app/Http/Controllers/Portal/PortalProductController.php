@@ -10,7 +10,7 @@ class PortalProductController extends Controller
 
     public function show($id)
     {
-        return view('portal.pages.products.single');
+        return view('portal.pages.products.single', compact('id'));
     }
 
     public function index()

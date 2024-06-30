@@ -1,5 +1,5 @@
 <div class="product-container" >
-    <a class="relative h-[430px] overflow-hidden rounded-xl object-cover" href="">
+    <a class="relative h-[430px] overflow-hidden rounded-xl object-cover" href="{{route('portal.products.show', ['product' => $product->id])}}">
         <img alt="coverImage" loading="lazy" width="1000" height="1000" decoding="async" data-nimg="1" class="h-full w-full object-cover object-top"
              style="color:transparent" src="{{asset('storage/'.$media->path)}}">
     </a>
