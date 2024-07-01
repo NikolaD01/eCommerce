@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_data', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('city');
             $table->string('region');
             $table->string('address');
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('phone_number', 15);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
