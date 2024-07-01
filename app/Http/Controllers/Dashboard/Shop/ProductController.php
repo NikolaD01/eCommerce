@@ -11,23 +11,21 @@ use App\Services\Shop\SizeService;
 
 class ProductController extends Controller
 {
-    protected ProductService $productService;
-    protected ColorService $colorService;
-    protected SizeService $sizeService;
-    protected MaterialService $materialService;
-    protected CategoryService $categoryService;
-    protected MediaService $mediaService;
-
-    public function __construct() {
-        $this->productService = app(ProductService::class);
-        $this->colorService = app(ColorService::class);
-        $this->sizeService = app(SizeService::class);
-        $this->materialService = app(MaterialService::class);
-        $this->categoryService = app(CategoryService::class);
-        $this->mediaService = app(MediaService::class);
-    }
+    protected ?ProductService $productService = null;
+    protected ?ColorService $colorService = null;
+    protected ?SizeService $sizeService = null;
+    protected ?MaterialService $materialService = null;
+    protected ?CategoryService $categoryService = null;
+    protected ?MediaService $mediaService = null;
 
     public function show($id) {
+        $this->productService = app(ProductService::class);
+        $this->categoryService = app(CategoryService::class);
+        $this->sizeService = app(SizeService::class);
+        $this->colorService = app(ColorService::class);
+        $this->materialService = app(MaterialService::class);
+        $this->mediaService = app(MediaService::class);
+
         $product = $this->productService->getProductWithRelations($id);
         return view('dashboard.shop.product.index', [
             'product' => $product,
@@ -39,22 +37,29 @@ class ProductController extends Controller
         ]);
     }
 
-    public function destroy($id)
-    {
-        $product = $this->productService->deleteProduct($id);
+    public function destroy($id) {
+        $this->productService = app(ProductService::class);
+
+        $this->productService->deleteProduct($id);
         return redirect(route('products.index'))->with('success', "Product Deleted Successfully");
     }
-    public function create()
-    {
-        return view('dashboard.shop.product.create', ['categories' => $this->categoryService->getAllCategories(),
+
+    public function create() {
+        $this->categoryService = app(CategoryService::class);
+        $this->sizeService = app(SizeService::class);
+        $this->materialService = app(MaterialService::class);
+        $this->mediaService = app(MediaService::class);
+
+        return view('dashboard.shop.product.create', [
+            'categories' => $this->categoryService->getAllCategories(),
             'sizes' => $this->sizeService->getAllSizes(),
             'materials' => $this->materialService->getAllMaterials(),
             'medias' => $this->mediaService->getAllMedias(),
         ]);
     }
-    public function index()
-    {
 
+    public function index() {
+        $this->productService = app(ProductService::class);
 
         $products = $this->productService->getAllProductsWithRelations();
         return view('dashboard.shop.products', compact('products'));
