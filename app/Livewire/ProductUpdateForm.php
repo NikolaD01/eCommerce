@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\Utility\CacheUtility;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 
@@ -27,10 +28,8 @@ class ProductUpdateForm extends Component
     public array $sizes = [];
     #[Validate('required|array')]
     public array $medias = [];
-    public function __construct()
-    {
-        $this->productService = app(ProductService::class);
-    }
+
+    private ?CacheUtility $cacheUtility = null;
     public function save()
     {
         $this->validate();
@@ -45,16 +44,27 @@ class ProductUpdateForm extends Component
             'medias' => $this->medias
         ];
 
+        $this->productService = app(ProductService::class);
+
+
         if(isset($this->product))
         {
             $message = $this->productService->updateProduct($this->product->id, $data);
 
+            $this->cacheUtility = app(CacheUtility::class);
+            $cacheKey = $this->cacheUtility->generateModelCacheKey('product', $this->product->id);
+            $this->cacheUtility->clearModelCache($cacheKey);
+
             session()->flash('message', 'Product updated successfully!');
             return $this->dispatch('refresh');
+
         }
         else
         {
             $this->productService->createProduct($data);
+            $this->cacheUtility = app(CacheUtility::class);
+            $cacheKey = $this->cacheUtility->generateModelCacheKey('product', $this->product->id);
+            $this->cacheUtility->clearModelCache($cacheKey);
             return redirect(route('products.index'))->with('success', "Product created");
         }
 

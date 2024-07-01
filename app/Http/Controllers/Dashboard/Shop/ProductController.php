@@ -8,6 +8,7 @@ use App\Services\Shop\ColorService;
 use App\Services\Shop\MaterialService;
 use App\Services\Shop\ProductService;
 use App\Services\Shop\SizeService;
+use App\Services\Utility\CacheUtility;
 
 class ProductController extends Controller
 {
@@ -18,29 +19,45 @@ class ProductController extends Controller
     protected ?CategoryService $categoryService = null;
     protected ?MediaService $mediaService = null;
 
+    private ?CacheUtility $cacheUtility = null;
     public function show($id) {
-        $this->productService = app(ProductService::class);
-        $this->categoryService = app(CategoryService::class);
-        $this->sizeService = app(SizeService::class);
-        $this->colorService = app(ColorService::class);
-        $this->materialService = app(MaterialService::class);
-        $this->mediaService = app(MediaService::class);
 
-        $product = $this->productService->getProductWithRelations($id);
-        return view('dashboard.shop.product.index', [
-            'product' => $product,
-            'categories' => $this->categoryService->getAllCategories(),
-            'sizes' => $this->sizeService->getAllSizes(),
-            'colors' => $this->colorService->getAllColors(),
-            'materials' => $this->materialService->getAllMaterials(),
-            'medias' => $this->mediaService->getAllMedias(),
-        ]);
+        $this->cacheUtility = app(CacheUtility::class);
+
+        $cacheKey = $this->cacheUtility->generateModelCacheKey('product', $id);
+
+        $details = $this->cacheUtility->remember($cacheKey, 1440, function () use ($id) {
+            $this->productService = app(ProductService::class);
+            $this->categoryService = app(CategoryService::class);
+            $this->sizeService = app(SizeService::class);
+            $this->colorService = app(ColorService::class);
+            $this->materialService = app(MaterialService::class);
+            $this->mediaService = app(MediaService::class);
+
+
+            $product = $this->productService->getProductWithRelations($id);
+
+            return  [
+                'product' => $product,
+                'categories' => $this->categoryService->getAllCategories(),
+                'sizes' => $this->sizeService->getAllSizes(),
+                'colors' => $this->colorService->getAllColors(),
+                'materials' => $this->materialService->getAllMaterials(),
+                'medias' => $this->mediaService->getAllMedias(),
+            ];
+        });
+
+        return view('dashboard.shop.product.index', $details);
     }
 
     public function destroy($id) {
         $this->productService = app(ProductService::class);
 
         $this->productService->deleteProduct($id);
+        $this->cacheUtility = app(CacheUtility::class);
+        $cacheKey = $this->cacheUtility->generateModelCacheKey('product', $id);
+        $this->cacheUtility->clearModelCache($cacheKey);
+
         return redirect(route('products.index'))->with('success', "Product Deleted Successfully");
     }
 

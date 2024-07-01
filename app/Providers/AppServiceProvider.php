@@ -39,6 +39,9 @@ use App\Interfaces\MediaRepositoryInterface;
 use App\Repositories\MediaRepository;
 use App\Services\Media\MediaService;
 
+
+//Cache
+use App\Services\Utility\CacheUtility;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -48,6 +51,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(CacheUtility::class, function ($app) {
+            return new CacheUtility();
+        });
+
         $this->app->bind(MediaRepositoryInterface::class , MediaRepository::class);
         $this->app->bind(UserDataRepositoryInterface::class, UserDataRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class, function ($app) {
