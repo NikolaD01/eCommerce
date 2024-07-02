@@ -15,13 +15,11 @@ class MaterialsUpdateForm extends Component
 
     protected MaterialService $materialService;
 
-    public function __construct()
-    {
-        $this->materialService = app(MaterialService::class);
-    }
 
     public function save()
     {
+        $this->materialService = app(MaterialService::class);
+
         $this->validate();
         $data = [
           'name' => $this->name,

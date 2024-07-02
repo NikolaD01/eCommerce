@@ -45,13 +45,13 @@ class ProductUpdateForm extends Component
         ];
 
         $this->productService = app(ProductService::class);
+        $this->cacheUtility = app(CacheUtility::class);
 
 
         if(isset($this->product))
         {
             $message = $this->productService->updateProduct($this->product->id, $data);
 
-            $this->cacheUtility = app(CacheUtility::class);
             $cacheKey = $this->cacheUtility->generateModelCacheKey('product', $this->product->id);
             $this->cacheUtility->clearModelCache($cacheKey);
 
@@ -61,8 +61,7 @@ class ProductUpdateForm extends Component
         }
         else
         {
-            $this->productService->createProduct($data);
-            $this->cacheUtility = app(CacheUtility::class);
+            $this->product = $this->productService->createProduct($data);
             $cacheKey = $this->cacheUtility->generateModelCacheKey('product', $this->product->id);
             $this->cacheUtility->clearModelCache($cacheKey);
             return redirect(route('products.index'))->with('success', "Product created");

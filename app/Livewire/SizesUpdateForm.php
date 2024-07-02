@@ -12,13 +12,10 @@ class SizesUpdateForm extends Component
     #[Validate('required|string')]
     public string $description;
     protected sizeService $sizeService;
-    public function __construct()
-    {
-        $this->sizeService = app(sizeService::class);
-    }
 
     public function save()
     {
+        $this->sizeService = app(sizeService::class);
         $this->validate();
 
         $data = [

@@ -16,14 +16,11 @@ class ColorsUpdateForm extends Component
     #[Validate('required|string')]
     public string $class;
     protected ColorService $colorService;
-    public function __construct()
-    {
-        $this->colorService = app(ColorService::class);
-
-    }
 
     public function save()
     {
+        $this->colorService = app(ColorService::class);
+
         $this->validate();
         $data = [
           'name' => $this->name,

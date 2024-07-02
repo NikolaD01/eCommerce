@@ -13,7 +13,6 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->categoryService = app(CategoryService::class);
-        $this->categories = $this->categoryService->getAllCategories();
     }
 
     public function destroy($id)
@@ -28,6 +27,7 @@ class CategoryController extends Controller
     }
     public function index()
     {
+        $this->categories = $this->categoryService->getAllCategories();
         return view('dashboard.shop.categories', ['categories' => $this->categories]);
     }
 }

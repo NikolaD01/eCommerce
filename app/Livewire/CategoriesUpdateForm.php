@@ -20,7 +20,6 @@ class CategoriesUpdateForm extends Component
     public function __construct()
     {
         $this->categoryService = app(CategoryService::class);
-        $this->categories = $this->categoryService->getAllCategories();
     }
 
     public function save()
@@ -52,6 +51,7 @@ class CategoriesUpdateForm extends Component
     }
     public function render()
     {
+        $this->categories = $this->categoryService->getAllCategories();
         return view('livewire.categories-update-form');
     }
 }
