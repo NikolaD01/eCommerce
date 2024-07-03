@@ -1,3 +1,3 @@
 <x-app-layout>
-    {{$category->categoryName}}
+    {{$category->category_name}}
 </x-app-layout>

@@ -2,13 +2,15 @@
 
 namespace App\Repositories;
 
-
 use App\Interfaces\BaseRepositoryInterface;
 use App\Models\Category;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
+
 class CategoryRepository implements BaseRepositoryInterface
 {
-
     protected Category $model;
 
     public function __construct(Category $model)
@@ -16,33 +18,53 @@ class CategoryRepository implements BaseRepositoryInterface
         $this->model = $model;
     }
 
-    public function getAll()
+    public function getAll() : Collection
     {
-        return $this->model::all();
-    }
-
-    public function getById($id)
-    {
-        return $this->model::find($id);
-    }
-
-    public function delete($id)
-    {
-        return $this->model::destroy($id);
-    }
-
-    public function create(array $data)
-    {
-        return $this->model::create($data);
-    }
-
-    public function update($id, array $data)
-    {
-        $color = $this->model::find($id);
-        if ($color) {
-            $color->save($data);
-            return $color;
+        try {
+            return $this->model::all();
+        } catch (QueryException $e) {
+            throw $e;
         }
-        return null;
+    }
+
+    public function getById($id): ?Category
+    {
+        try {
+            return $this->model::find($id);
+        } catch (ModelNotFoundException | QueryException $e) {
+            throw $e;
+        }
+    }
+
+    public function delete($id) : int
+    {
+        try {
+            return $this->model::destroy($id);
+        } catch (QueryException $e) {
+            throw $e;
+        }
+    }
+
+    public function create(array $data) : Category
+    {
+        try {
+            return $this->model::create($data);
+        } catch (QueryException $e) {
+            throw $e;
+        }
+    }
+
+    public function update($id, array $data): ?Category
+    {
+        try {
+            $category = $this->model::find($id);
+            if ($category) {
+                $category->update($data);
+                return $category;
+            }
+            return null;
+        } catch (ModelNotFoundException | QueryException $e) {
+            throw $e;
+        }
     }
 }

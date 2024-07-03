@@ -89,7 +89,7 @@ class ProductService
 
     protected function intoEuro($price) : float
     {
-        $price = 3033 / 100;
+        $price = $price / 100;
         $price = ceil($price * 100) / 100;
         return (float) $price;
     }

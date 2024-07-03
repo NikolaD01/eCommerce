@@ -7,7 +7,6 @@ use App\Services\Shop\MaterialService;
 
 class MaterialController extends Controller
 {
-    private $materials;
     private MaterialService $materialService;
     public function __construct()
     {
@@ -21,7 +20,7 @@ class MaterialController extends Controller
     }
     public function index()
     {
-        $this->materials = $this->materialService->getAllMaterials();
-        return view('dashboard.shop.materials', ['materials' => $this->materials]);
+        $materials = $this->materialService->getAllMaterials();
+        return view('dashboard.shop.materials', ['materials' => $materials]);
     }
 }
