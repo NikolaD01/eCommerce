@@ -18,8 +18,8 @@ class ProductUpdateForm extends Component
     public string $title;
     #[Validate('required|string')]
     public string $description;
-    #[Validate('required|numeric')]
-    public int $price;
+    #[Validate('required|decimal:0,2')]
+    public float $price;
     #[Validate('required|array')]
     public array $categories = [];
     #[Validate('required|array')]
@@ -32,7 +32,11 @@ class ProductUpdateForm extends Component
     private ?CacheUtility $cacheUtility = null;
     public function save()
     {
+        $this->productService = app(ProductService::class);
+        $this->cacheUtility = app(CacheUtility::class);
+
         $this->validate();
+
 
         $data = [
             'title' => $this->title,
@@ -44,8 +48,7 @@ class ProductUpdateForm extends Component
             'medias' => $this->medias
         ];
 
-        $this->productService = app(ProductService::class);
-        $this->cacheUtility = app(CacheUtility::class);
+
 
 
         if(isset($this->product))

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
-    protected $productRepository;
+    protected ProductRepositoryInterface $productRepository;
 
     public function __construct(ProductRepositoryInterface $productRepository)
     {
@@ -15,20 +15,33 @@ class ProductService
     }
     public function getAllProducts()
     {
-        return $this->productRepository->getAll();
+        $products = $this->productRepository->getAll();
+        return $products->map(function ($product) {
+            $product->price = $this->intoCents($product->price);
+            return $product;
+        }, $products);
     }
     public function getAllProductsWithRelations()
     {
-        return $this->productRepository->getAllWithRelations();
+        $products = $this->productRepository->getAllWithRelations();
+        return $products->map(function($product) {
+            $product->price = $this->intoEuro($product->price);
+            return $product;
+        }, $products);
+
     }
     public function getProduct($id)
     {
-        return $this->productRepository->getById($id);
+        $product = $this->productRepository->getById($id);
+        $product->price = $this->intoEuro($product->price);
+        return $product;
     }
 
     public function getProductWithRelations($id)
     {
-        return $this->productRepository->getByIdWithRelations($id);
+        $product = $this->productRepository->getByIdWithRelations($id);
+        $product->price = $this->intoEuro($product->price);
+        return $product;
     }
     public function deleteProduct($id)
     {
@@ -40,6 +53,7 @@ class ProductService
         DB::beginTransaction();
 
         try {
+            $data['price'] = $this->intoCents($data['price']);
             $product = $this->productRepository->create($data);
             $this->productRepository->syncRelations($product, $data);
 
@@ -56,6 +70,7 @@ class ProductService
         DB::beginTransaction();
 
         try {
+            $data['price'] = $this->intoCents($data['price']);
             $product = $this->productRepository->update($id, $data);
             $this->productRepository->syncRelations($product, $data);
 
@@ -67,5 +82,15 @@ class ProductService
         }
     }
 
+    protected function intoCents($price) : int {
+        $price = round($price * 100);
+        return (int) $price;
+    }
 
+    protected function intoEuro($price) : float
+    {
+        $price = 3033 / 100;
+        $price = ceil($price * 100) / 100;
+        return (float) $price;
+    }
 }
