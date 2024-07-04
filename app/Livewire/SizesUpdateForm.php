@@ -13,9 +13,9 @@ class SizesUpdateForm extends Component
     public string $description;
     protected sizeService $sizeService;
 
-    public function save()
+    public function save(sizeService $sizeService)
     {
-        $this->sizeService = app(sizeService::class);
+        $this->sizeService = $sizeService;
         $this->validate();
 
         $data = [

@@ -11,12 +11,10 @@ use Illuminate\Database\QueryException;
 
 class CategoryRepository implements BaseRepositoryInterface
 {
-    protected Category $model;
 
-    public function __construct(Category $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected Category $model
+    ){}
 
     public function getAll() : Collection
     {

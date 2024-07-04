@@ -8,13 +8,9 @@ use App\Models\Media;
 
 class MediaRepository implements MediaRepositoryInterface
 {
-
-    protected Media $model;
-
-    public function __construct(Media $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected Media $model
+    ){}
 
     public function getAll()
     {

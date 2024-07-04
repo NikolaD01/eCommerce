@@ -6,12 +6,10 @@ use App\Interfaces\BaseRepositoryInterface;
 
 class CategoryService
 {
-    protected BaseRepositoryInterface $categoryRepository;
 
-    public function __construct(BaseRepositoryInterface $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
+    public function __construct(
+        protected BaseRepositoryInterface $categoryRepository
+    ){}
 
     public function getAllCategories()
     {

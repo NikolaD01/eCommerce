@@ -7,13 +7,9 @@ use App\Models\Product;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-
-    protected Product $model;
-
-    public function __construct(Product $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected Product $model
+    ){}
 
     public function getAll()
     {
@@ -45,7 +41,6 @@ class ProductRepository implements ProductRepositoryInterface
         $product = $this->getByIdWithRelations($id);
 
         if ($product) {
-            $product->colors()->detach();
             $product->sizes()->detach();
             $product->materials()->detach();
             $product->categories()->detach();

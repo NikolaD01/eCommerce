@@ -7,12 +7,10 @@ use App\Services\Shop\ColorService;
 
 class ColorController extends Controller
 {
-    private ColorService $colorService ;
 
-    public function __construct()
-    {
-        $this->colorService = app(ColorService::class);
-    }
+    public function __construct(
+        protected ColorService $colorService
+    ){}
 
     public function destroy($color)
     {

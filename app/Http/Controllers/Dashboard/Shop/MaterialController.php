@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Dashboard\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Models\Material;
 use App\Services\Shop\MaterialService;
 
 class MaterialController extends Controller
 {
-    private MaterialService $materialService;
-    public function __construct()
-    {
-        $this->materialService = app(MaterialService::class);
-    }
+    public function __construct(
+        protected MaterialService $materialService
+    ){}
 
     public function destroy($id)
     {

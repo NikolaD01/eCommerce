@@ -10,7 +10,6 @@ use App\Services\Shop\ProductService;
 
 class ProductUpdateForm extends Component
 {
-    protected ProductService $productService;
     public array $data;
     public $product;
 
@@ -29,11 +28,13 @@ class ProductUpdateForm extends Component
     #[Validate('required|array')]
     public array $medias = [];
 
-    private ?CacheUtility $cacheUtility = null;
-    public function save()
+    protected ?CacheUtility $cacheUtility = null;
+    protected ProductService $productService;
+
+    public function save(ProductService $productService, CacheUtility $cacheUtility)
     {
-        $this->productService = app(ProductService::class);
-        $this->cacheUtility = app(CacheUtility::class);
+        $this->productService = $productService;
+        $this->cacheUtility = $cacheUtility;
 
         $this->validate();
 

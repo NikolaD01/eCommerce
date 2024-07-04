@@ -6,12 +6,10 @@ use App\Interfaces\BaseRepositoryInterface;
 
 class SizeService
 {
-    protected BaseRepositoryInterface $sizeRepository;
 
-    public function __construct(BaseRepositoryInterface $sizeRepository)
-    {
-        $this->sizeRepository = $sizeRepository;
-    }
+    public function __construct(
+        protected BaseRepositoryInterface $sizeRepository
+    ){}
 
     public function getAllSizes()
     {

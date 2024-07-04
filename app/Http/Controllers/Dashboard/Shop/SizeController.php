@@ -7,12 +7,9 @@ use App\Services\Shop\SizeService;
 
 class SizeController extends Controller
 {
-    private sizeService $sizeService;
-
-    public function __construct()
-    {
-        $this->sizeService = app(sizeService::class);
-    }
+    public function __construct(
+        protected sizeService $sizeService
+    ){}
 
     public function destroy($size)
     {

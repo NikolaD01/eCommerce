@@ -9,12 +9,10 @@ use App\Models\Material;
 class MaterialRepository implements BaseRepositoryInterface
 {
 
-    protected Material $model;
 
-    public function __construct(Material $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected Material $model
+    ){}
 
     public function getAll()
     {

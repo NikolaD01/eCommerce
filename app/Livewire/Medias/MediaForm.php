@@ -21,14 +21,10 @@ class MediaForm extends Component
     #[Validate('required')]
     public $file;
     protected MediaService $mediaService;
-    public function __construct()
+    public function save(MediaService $mediaService)
     {
-        $this->mediaService = app(MediaService::class);
+        $this->mediaService = $mediaService;
 
-    }
-
-    public function save()
-    {
 
         $this->validate();
         $data = [

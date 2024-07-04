@@ -9,12 +9,10 @@ use App\Models\Size;
 class SizeRepository implements BaseRepositoryInterface
 {
 
-    protected Size $model;
 
-    public function __construct(Size $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected Size $model
+    ){}
 
     public function getAll()
     {

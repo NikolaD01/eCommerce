@@ -17,9 +17,9 @@ class ColorsUpdateForm extends Component
     public string $class;
     protected ColorService $colorService;
 
-    public function save()
+    public function save(ColorService $colorService)
     {
-        $this->colorService = app(ColorService::class);
+        $this->colorService = $colorService;
 
         $this->validate();
         $data = [

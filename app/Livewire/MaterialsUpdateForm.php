@@ -16,9 +16,9 @@ class MaterialsUpdateForm extends Component
     protected MaterialService $materialService;
 
 
-    public function save()
+    public function save(MaterialService $materialService)
     {
-        $this->materialService = app(MaterialService::class);
+        $this->materialService = $materialService;
 
         $this->validate();
         $data = [

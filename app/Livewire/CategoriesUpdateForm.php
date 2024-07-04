@@ -17,13 +17,10 @@ class CategoriesUpdateForm extends Component
     #[Validate('required|string')]
     public string $name;
     protected CategoryService $categoryService;
-    public function __construct()
-    {
-        $this->categoryService = app(CategoryService::class);
-    }
 
-    public function save()
+    public function save(CategoryService $categoryService)
     {
+        $this->categoryService = $categoryService;
         $this->validate();
 
         if(!isset($this->category))
@@ -49,8 +46,9 @@ class CategoriesUpdateForm extends Component
 
 
     }
-    public function render()
+    public function render(CategoryService $categoryService)
     {
+        $this->categoryService = $categoryService;
         $this->categories = $this->categoryService->getAllCategories();
         return view('livewire.categories-update-form');
     }

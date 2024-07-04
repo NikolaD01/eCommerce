@@ -12,14 +12,10 @@ class MediaList extends Component
     public int $paged = 1;
     protected MediaService $mediaService;
     public int $itemsPerPage = 4;
-    public function __construct()
-    {
-        $this->mediaService = app(MediaService::class);
-        $this->medias = $this->mediaService->paginate($this->itemsPerPage, $this->paged);
-    }
     #[On('refresh')]
-    public function refresh()
+    public function refresh(MediaService $mediaService)
     {
+        $this->mediaService = $mediaService;
         $this->medias = $this->mediaService->paginate($this->itemsPerPage, $this->paged);
     }
     public function paginate($paged)
@@ -28,8 +24,10 @@ class MediaList extends Component
         $this->dispatch('refresh');
     }
 
-    public function render()
+    public function render(MediaService $mediaService)
     {
+        $this->mediaService = $mediaService;
+        $this->medias = $this->mediaService->paginate($this->itemsPerPage, $this->paged);
         return view('livewire.medias.media-list');
     }
 }

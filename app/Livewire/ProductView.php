@@ -17,25 +17,25 @@ class ProductView extends Component
     protected productService $productService;
     protected mediaService $mediaService;
 
-    public function mount($product)
+    public function mount($product, mediaService $mediaService)
     {
         $this->product = $product;
         $this->media = $product->medias[0];
 
-        $this->mediaService = app(MediaService::class);
+        $this->mediaService = $mediaService;
         $this->colors = $this->mediaService->getMediaByProduct($this->product->id)->pluck('color')->unique('id');
     }
 
     #[On('color')]
-    public function color($product,$color)
+    public function color($product,$color, mediaService $mediaService)
     {
-        $this->mediaService = app(MediaService::class);
+        $this->mediaService = $mediaService;
         return $this->media = $this->mediaService->getMediaColor($product, $color)->first();
     }
     #[On('refresh')]
-    public function refresh()
+    public function refresh(productService $productService)
     {
-        $this->productService = app(ProductService::class);
+        $this->productService = $productService;
         return $this->product = $this->productService->getProductWithRelations($this->product->id);
     }
 

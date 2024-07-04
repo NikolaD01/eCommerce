@@ -7,12 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
-    protected ProductRepositoryInterface $productRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
-    {
-        $this->productRepository = $productRepository;
-    }
+    public function __construct(
+        protected ProductRepositoryInterface $productRepository
+    ){}
     public function getAllProducts()
     {
         $products = $this->productRepository->getAll();

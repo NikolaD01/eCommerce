@@ -8,17 +8,10 @@ use Livewire\Component;
 class ProductList extends Component
 {
     public $products;
-
-    protected ProductService $productService;
-    public function __construct()
+    public function render(ProductService $productService)
     {
-        $this->productService = app(ProductService::class);
-        $this->products = $this->productService->getAllProductsWithRelations();
-    }
+        $this->products = $productService->getAllProductsWithRelations();
 
-
-    public function render()
-    {
         return view('livewire.components.product.product-list');
     }
 }

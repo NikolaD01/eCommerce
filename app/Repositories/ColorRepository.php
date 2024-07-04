@@ -9,12 +9,10 @@ use App\Models\Color;
 class ColorRepository implements BaseRepositoryInterface
 {
 
-    protected Color $model;
 
-    public function __construct(Color $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected Color $model
+    ){}
 
     public function getAll()
     {

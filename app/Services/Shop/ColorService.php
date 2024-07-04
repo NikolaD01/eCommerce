@@ -8,12 +8,10 @@ use Illuminate\Support\Facades\File;
 
 class ColorService
 {
-    protected BaseRepositoryInterface $colorRepository;
 
-    public function __construct(BaseRepositoryInterface $colorRepository)
-    {
-        $this->colorRepository = $colorRepository;
-    }
+    public function __construct(
+        protected BaseRepositoryInterface $colorRepository
+    ){}
 
     public function getAllColors()
     {

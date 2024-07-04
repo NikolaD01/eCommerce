@@ -8,12 +8,10 @@ use App\Services\Shop\CategoryService;
 
 class CategoryController extends Controller
 {
-    private CategoryService $categoryService;
 
-    public function __construct()
-    {
-        $this->categoryService = app(CategoryService::class);
-    }
+    public function __construct(
+        protected CategoryService $categoryService
+    ){}
 
     public function destroy($id)
     {

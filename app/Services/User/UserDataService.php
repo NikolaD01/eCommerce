@@ -6,12 +6,10 @@ use App\Interfaces\UserDataRepositoryInterface;
 
 class UserDataService
 {
-    protected UserDataRepositoryInterface $colorRepository;
 
-    public function __construct(UserDataRepositoryInterface $userDataRepository)
-    {
-        $this->userDataRepository = $userDataRepository;
-    }
+    public function __construct(
+        protected UserDataRepositoryInterface $userDataRepository
+    ){}
 
     public function getAllUserData()
     {

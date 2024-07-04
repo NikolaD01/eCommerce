@@ -8,12 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 class MediaService
 {
-    protected MediaRepositoryInterface $mediaRepository;
 
-    public function __construct(MediaRepositoryInterface $mediaRepository)
-    {
-        $this->mediaRepository = $mediaRepository;
-    }
+    public function __construct(
+        protected MediaRepositoryInterface $mediaRepository
+    ){}
 
     public function getAllMedias()
     {

@@ -6,12 +6,10 @@ use App\Interfaces\BaseRepositoryInterface;
 
 class MaterialService
 {
-    protected BaseRepositoryInterface $materialRepository;
 
-    public function __construct(BaseRepositoryInterface $materialRepository)
-    {
-        $this->materialRepository = $materialRepository;
-    }
+    public function __construct(
+        protected BaseRepositoryInterface $materialRepository
+    ){}
 
     public function getAllMaterials()
     {

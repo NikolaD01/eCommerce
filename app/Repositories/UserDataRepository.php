@@ -8,13 +8,9 @@ use App\Models\UserData;
 
 class UserDataRepository implements UserDataRepositoryInterface
 {
-
-    protected UserData $model;
-
-    public function __construct(UserData $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected UserData $model
+    ){}
 
     public function getAll()
     {
