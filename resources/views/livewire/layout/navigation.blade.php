@@ -70,8 +70,8 @@ new class extends Component
                     <x-nav-link :href="route('medias.index')" wire:navigate>
                         {{ __('Orders') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('medias.index')" wire:navigate>
-                        {{ __('Costumers') }}
+                    <x-nav-link :href="route('users.index')" wire:navigate>
+                        {{ __('Users') }}
                     </x-nav-link>
                     <x-nav-link :href="route('medias.index')" wire:navigate>
                         {{ __('Medias') }}

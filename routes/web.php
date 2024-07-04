@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Dashboard\Admin\UserDataController;
 use App\Http\Controllers\Dashboard\Media\MediaController;
 use App\Http\Controllers\Dashboard\Shop\CategoryController;
 use App\Http\Controllers\Dashboard\Shop\ColorController;
@@ -37,6 +38,9 @@ Route::prefix('dashboard')->group(function () {
        Route::resource('sizes', SizeController::class);
 
        Route::resource('medias', MediaController::class);
+       Route::controller(UserDataController::class)->group(function () {
+          Route::get('users', 'index')->name('users.index');
+       });
    });
 })->middleware(['auth', 'verified']);
 
