@@ -1,23 +1,38 @@
 <?php
 
+
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
 
+use App\Services\User\UserService;
+
 new class extends Component
 {
     public string $name = '';
     public string $email = '';
 
+    protected UserService $userService;
+
     /**
      * Mount the component.
      */
-    public function mount(): void
+    public function mount($user, UserService $userService): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        if(!isset($user))
+        {
+            $this->name = Auth::user()->name;
+            $this->email = Auth::user()->email;
+        }
+        else
+        {
+            $this->userService = $userService;
+            $user = $this->userService->getUserById($user);
+            $this->name = $user->name;
+            $this->email = $user->email;
+        }
     }
 
     /**

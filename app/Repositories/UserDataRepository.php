@@ -14,23 +14,17 @@ class UserDataRepository implements UserDataRepositoryInterface
 
     public function getAll()
     {
-        return $this->model::with(['user' => function($query) {
-            $query->select('id', 'name', 'email', 'role', 'created_at', 'updated_at');
-        }])->get();
+        return $this->model::all();
     }
 
     public function getById($id)
     {
-        return $this->model::with(['user' => function($query) {
-            $query->select('id', 'name', 'email', 'role', 'created_at', 'updated_at');
-        }])->find($id);
+        return $this->model::find($id);
     }
 
     public function findByUserId($user)
     {
-        return $this->model::with(['user' => function($query) {
-            $query->select('id', 'name', 'email', 'role', 'created_at', 'updated_at');
-        }])->where('user_id', $user)->first();
+        return $this->model::where('user_id', $user)->first();
     }
 
     public function delete($id)

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\User\UserDataService;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
+use \Illuminate\Contracts\View\View;
 class UpdateProfileAdditionalData extends Component
 {
 
@@ -31,10 +32,10 @@ class UpdateProfileAdditionalData extends Component
 
     protected  $data;
     protected UserDataService $userDataService;
-    public function __construct()
+    public function mount(userDataService $userDataService) : void
     {
-        $this->userDataService = app(UserDataService::class);
-        $this->user = Auth::user()->id;
+        $this->userDataService = $userDataService;
+        $this->user = request()->query('user') ?? Auth::user()->id;
         $this->data = $this->userDataService->getByUserId($this->user);
 
         if($this->data)
@@ -46,11 +47,12 @@ class UpdateProfileAdditionalData extends Component
             $this->post_code = $this->data->post_code;
             $this->phone_number = $this->data->phone_number;
         }
-
     }
 
-    public function updateUserData()
+    public function updateUserData(userDataService $userDataService) : void
     {
+        $this->userDataService = $userDataService;
+
         $this->validate();
 
         $data = [
@@ -62,17 +64,17 @@ class UpdateProfileAdditionalData extends Component
             'phone_number' => $this->phone_number,
         ];
 
-
+        $this->data = $this->userDataService->getByUserId($this->user);
         if(!$this->data)
         {
             $this->userDataService->createUserData($data);
-           return $this->dispatch('profile-data-updated');
+            $this->dispatch('profile-data-updated');
+            return;
         }
         $this->userDataService->updateUserData($this->data->id, $data);
-        return $this->dispatch('profile-data-updated');
-
+        $this->dispatch('profile-data-updated');
     }
-    public function render()
+    public function render(userDataService $userDataService) : View
     {
         return view('livewire.profile.update-profile-additional-data');
     }

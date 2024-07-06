@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 
+use App\Repositories\UserRepository;
 use App\Services\User\UserDataService;
+use App\Services\User\UserService;
 use Illuminate\Support\ServiceProvider;
 
 use App\Interfaces\BaseRepositoryInterface;
@@ -64,10 +66,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BaseRepositoryInterface::class . '.size', SizeRepository::class);
         $this->app->bind(BaseRepositoryInterface::class . '.material', MaterialRepository::class);
         $this->app->bind(BaseRepositoryInterface::class . '.category', CategoryRepository::class);
+        $this->app->bind(BaseRepositoryInterface::class.'.user', UserRepository::class);
 
         $this->app->singleton(UserDataService::class, function ($app) {
             return new UserDataService($app->make(UserDataRepositoryInterface::class));
         });
+
 
         $this->app->singleton(MediaService::class, function ($app) {
             return new MediaService($app->make(MediaRepositoryInterface::class));
@@ -76,6 +80,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ProductService::class, function ($app) {
             return new ProductService($app->make(ProductRepositoryInterface::class));
         });
+
+        $this->app->singleton(UserService::class, function ($app) {
+            return new UserService($app->make(BaseRepositoryInterface::class . '.user'));
+        });
+
         $this->app->singleton(ColorService::class, function ($app) {
             return new ColorService($app->make(BaseRepositoryInterface::class . '.color'));
         });
