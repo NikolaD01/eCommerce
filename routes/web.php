@@ -37,11 +37,13 @@ Route::prefix('dashboard')->group(function () {
        Route::resource('colors', ColorController::class);
        Route::resource('sizes', SizeController::class);
 
-       Route::resource('medias', MediaController::class);
-       Route::controller(UserDataController::class)->group(function () {
-          Route::get('users', 'index')->name('users.index');
-       });
+
    });
+
+    Route::resource('medias', MediaController::class);
+    Route::controller(UserDataController::class)->group(function () {
+        Route::get('users', 'index')->name('users.index');
+    });
 })->middleware(['auth', 'verified']);
 
 

@@ -14,6 +14,7 @@ new class extends Component
     public string $name = '';
     public string $email = '';
 
+    protected User $user;
     protected UserService $userService;
 
     /**
@@ -23,15 +24,16 @@ new class extends Component
     {
         if(!isset($user))
         {
+            $this->user = Auth::user();
             $this->name = Auth::user()->name;
             $this->email = Auth::user()->email;
         }
         else
         {
             $this->userService = $userService;
-            $user = $this->userService->getUserById($user);
-            $this->name = $user->name;
-            $this->email = $user->email;
+            $this->user = $this->userService->getUserById($user);
+            $this->name = $this->user->name;
+            $this->email = $this->user->email;
         }
     }
 
@@ -40,14 +42,13 @@ new class extends Component
      */
     public function updateProfileInformation(): void
     {
-        $user = Auth::user();
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
         ]);
 
-        $user->fill($validated);
+        $this->user->fill($validated);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
