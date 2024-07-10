@@ -1,5 +1,8 @@
 <x-app-layout>
-    @component('components.shop.buttons.create', ['route'=> route('products.create'), 'text' => 'Create product']) @endcomponent
+    <div class="flex gap-1.5" >
+        @component('components.shop.buttons.create', ['route'=> route('products.create'), 'text' => 'Create product']) @endcomponent
+        <livewire:dashboard.admin.export.products-export/>
+    </div>
     <section class="grid grid-cols-2">
         <div>
         @include('components.shop.products-parts.product-side-filter')
