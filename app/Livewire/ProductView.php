@@ -7,17 +7,16 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 
 use App\Services\Shop\ProductService;
-use Illuminate\Support\Facades\App;
 
 class ProductView extends Component
 {
     public $product;
     public $media;
     public $colors;
-    protected productService $productService;
-    protected mediaService $mediaService;
+    protected ProductService $productService;
+    protected MediaService $mediaService;
 
-    public function mount($product, mediaService $mediaService)
+    public function mount($product, MediaService $mediaService)
     {
         $this->product = $product;
         $this->media = $product->medias[0];
@@ -27,8 +26,9 @@ class ProductView extends Component
     }
 
     #[On('color')]
-    public function color($product,$color, mediaService $mediaService)
+    public function color($product,$color, MediaService $mediaService, ProductService $productService)
     {
+        $this->product = $productService->getProductWithRelations($product);
         $this->mediaService = $mediaService;
         return $this->media = $this->mediaService->getMediaColor($product, $color)->first();
     }

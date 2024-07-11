@@ -13,12 +13,10 @@
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="bg-white antialiased font-sans">
-    <header class="bg-white grid grid-cols-2 items-center gap-2 py-6 lg:grid-cols-3">
-        @if (Route::has('login'))
-        @endif
-    </header>
-    <main class="">
+@include('components.header.default')
+<main class="">
         <div class="container m-auto flex flex-col gap-32 ">
             {{$slot}}
         </div>

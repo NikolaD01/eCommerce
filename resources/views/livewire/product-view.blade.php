@@ -3,7 +3,7 @@
         <img alt="coverImage" loading="lazy" width="1000" height="1000" decoding="async" data-nimg="1" class="h-full w-full object-cover object-top"
              style="color:transparent" src="{{asset('storage/'.$media->path)}}">
     </a>
-    <div class="mt-5 space-y-1 p-4 ">
+    <div class="mt-5 p-4 ">
         <div class="flex items-center justify-between">
             <a class="text-2xl font-medium" href="/products/brown-coat">{{$product->title}}</a>
             <div class="flex items-center gap-3">
@@ -25,10 +25,16 @@
             </div>
             <div class="flex items-center gap-3">
                 @foreach($product->sizes as $size)
-                    <div>{{$size->name}}</div>
+                    <button>{{$size->name}}</button>
                 @endforeach
             </div>
         </div>
-        <span class="text-2xl font-medium text-secondary">$ {{$product->price}}</span>
+        <div class="flex items-center justify-between mt-5">
+            <span class="text-2xl font-medium text-secondary">$ {{$product->price}}</span>
+            @if(Str::contains(url()->current(), 'shop'))
+                <livewire:portal.utility.add-to-cart/>
+            @endif
+        </div>
+
     </div>
 </div>

@@ -18,8 +18,8 @@ Route::prefix('/')->group(function () {
     Route::controller(OrderController::class)->group(function () {
     });
     Route::controller(PortalProductController::class)->group(function () {
-        Route::get('products', 'index')->name('portal.products.index');
-        Route::get('products/{product}', 'show')->name('portal.products.show');
+        Route::get('shop', 'index')->name('portal.products.index');
+        Route::get('product/{product}', 'show')->name('portal.products.show');
     });
 });
 
