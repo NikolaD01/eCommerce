@@ -16,6 +16,11 @@ class UserService
         return $this->userRepository->getAll();
     }
 
+    public function getAllUsersWithData()
+    {
+        return $this->userRepository->getAllWithData();
+    }
+
     public function getUserById($id)
     {
         return $this->userRepository->getById($id);

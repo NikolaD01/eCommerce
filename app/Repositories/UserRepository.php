@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\BaseRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class UserRepository implements BaseRepositoryInterface
+class UserRepository implements UserRepositoryInterface
 {
     public function __construct(
         protected User $model
@@ -18,6 +18,10 @@ class UserRepository implements BaseRepositoryInterface
         return $this->model::select('id', 'name', 'email', 'role', 'created_at', 'updated_at')->get();
     }
 
+    public function GetAllWithData()
+    {
+        return $this->model::with('userData')->select('id', 'name', 'email', 'role', 'created_at', 'updated_at')->get();
+    }
     public function getById($id)
     {
         return $this->model::select('id', 'name', 'email', 'role', 'created_at', 'updated_at')->find($id);

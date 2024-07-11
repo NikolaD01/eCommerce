@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Dashboard\Admin\Export;
 
-use App\Services\Utility\ExportUtility;
+use App\Services\Utility\ProductExportUtility;
 use Livewire\Component;
 
 class ProductsExport extends Component
 {
     public function exportCsv()
     {
-         return ExportUtility::exportCsv();
+         return ProductExportUtility::exportCsv();
     }
 
     public function render()
