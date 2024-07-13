@@ -61,6 +61,7 @@ class ProductRepository implements ProductRepositoryInterface
             $product->title = $data['title'];
             $product->description = $data['description'];
             $product->price = $data['price'];
+            $product->quantity = $data['quantity'];
             $product->save();
             return $product;
         }

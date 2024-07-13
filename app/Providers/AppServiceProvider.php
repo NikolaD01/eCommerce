@@ -54,20 +54,46 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(CacheUtility::class, function ($app) {
-            return new CacheUtility();
-        });
+
 
         $this->app->bind(MediaRepositoryInterface::class , MediaRepository::class);
         $this->app->bind(UserDataRepositoryInterface::class, UserDataRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class, function ($app) {
             return new ProductRepository(new \App\Models\Product());
         });
-        $this->app->bind(BaseRepositoryInterface::class . '.color', ColorRepository::class);
-        $this->app->bind(BaseRepositoryInterface::class . '.size', SizeRepository::class);
-        $this->app->bind(BaseRepositoryInterface::class . '.material', MaterialRepository::class);
-        $this->app->bind(BaseRepositoryInterface::class . '.category', CategoryRepository::class);
+
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+
+        $this->app->bind(
+            BaseRepositoryInterface::class,
+            function ($app) {
+                return collect([
+                    'color' => $app->make(ColorRepository::class),
+                    'size' => $app->make(SizeRepository::class),
+                    'material' => $app->make(MaterialRepository::class),
+                    'category' => $app->make(CategoryRepository::class),
+                ]);
+            }
+        );
+
+
+        $services = collect([
+            ColorService::class => 'color',
+            SizeService::class => 'size',
+            MaterialService::class => 'material',
+            CategoryService::class => 'category',
+        ]);
+
+        $services->each(function ($repositoryKey, $service) {
+            $this->app->singleton($service, function ($app) use ($repositoryKey, $service) {
+                $repositories = $app->make(BaseRepositoryInterface::class);
+                return new $service($repositories->get($repositoryKey));
+            });
+        });
+
+        $this->app->singleton(CacheUtility::class, function ($app) {
+            return new CacheUtility();
+        });
 
         $this->app->singleton(UserDataService::class, function ($app) {
             return new UserDataService($app->make(UserDataRepositoryInterface::class));
@@ -86,21 +112,6 @@ class AppServiceProvider extends ServiceProvider
             return new UserService($app->make(UserRepositoryInterface::class));
         });
 
-        $this->app->singleton(ColorService::class, function ($app) {
-            return new ColorService($app->make(BaseRepositoryInterface::class . '.color'));
-        });
-
-        $this->app->singleton(SizeService::class, function ($app) {
-            return new SizeService($app->make(BaseRepositoryInterface::class . '.size'));
-        });
-
-        $this->app->singleton(MaterialService::class, function ($app) {
-            return new MaterialService($app->make(BaseRepositoryInterface::class . '.material'));
-        });
-
-        $this->app->singleton(CategoryService::class, function ($app) {
-            return new CategoryService($app->make(BaseRepositoryInterface::class . '.category'));
-        });
     }
 
     /**

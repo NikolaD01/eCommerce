@@ -19,6 +19,8 @@ class ProductUpdateForm extends Component
     public string $description;
     #[Validate('required|decimal:0,2')]
     public float $price;
+    #[Validate('required|integer')]
+    public int $quantity;
     #[Validate('required|array')]
     public array $categories = [];
     #[Validate('required|array')]
@@ -43,6 +45,7 @@ class ProductUpdateForm extends Component
             'title' => $this->title,
             'description' => $this->description,
             'price' => $this->price,
+            'quantity' => $this->quantity,
             'categories' => $this->categories,
             'materials' => $this->materials,
             'sizes' => $this->sizes,
@@ -83,6 +86,7 @@ class ProductUpdateForm extends Component
             $this->title =  $this->product->title;
             $this->description =  $this->product->description;
             $this->price =  $this->product->price;
+            $this->quantity = $this->product->quantity;
             $this->categories =  $this->product->categories->pluck('id')->toArray();
             $this->materials =  $this->product->materials->pluck('id')->toArray();
             $this->sizes =  $this->product->sizes->pluck('id')->toArray();
