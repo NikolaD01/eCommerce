@@ -2,6 +2,9 @@
 
 namespace App\Services\Utility;
 
+use App\Services\Media\MediaService;
+use App\Services\Shop\ProductService;
+use App\Services\Shop\SizeService;
 use Illuminate\Support\Facades\Log;
 
 class CartUtility
@@ -23,19 +26,19 @@ class CartUtility
      */
     public static function listCartItems() : array
     {
-        $cartItems = self::getCartItems();
-        $items = [];
+        $productService = app(ProductService::class);
+        $mediaService = app(MediaService::class);
+        $sizeService = app(SizeService::class);
+        $cart = self::getCartItems();
 
-        foreach ($cartItems as $key => $item) {
-            $items[] = [
-                'product_id' => $item['product_id'],
-                'color' => $item['color'],
-                'size' => $item['size'],
-                'quantity' => $item['quantity']
-            ];
+        foreach ($cart as &$item) {
+            $product = $productService->getProduct($item['product_id']);
+            $item['product'] = $product;
+            $item['media'] = $mediaService->getMediaColor($item['product_id'],$item['color']);
+            $item['size'] =  $sizeService->getSize($item['size']);
         }
 
-        return $items;
+        return $cart;
     }
 
     /**
