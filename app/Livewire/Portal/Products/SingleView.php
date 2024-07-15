@@ -43,9 +43,7 @@ class SingleView extends Component
     {
         $data = [
           'product_id' => $this->product->id,
-          'title' => $this->product->title,
-          'price' => $this->product->price,
-          'quantity' => $this->quantity,
+          'quantity' => (int) $this->quantity,
           'color' => $this->selectedColor,
           'size' => $this->selectedSize,
         ];
