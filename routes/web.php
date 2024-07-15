@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Http\Middleware\UserIsAdminValidation;
+
 use App\Http\Controllers\Dashboard\Admin\UserDataController;
 use App\Http\Controllers\Dashboard\Media\MediaController;
 
@@ -33,7 +35,7 @@ Route::prefix('/')->group(function () {
 
 
 
-Route::prefix('dashboard')->group(function () {
+Route::prefix('dashboard')->middleware(UserIsAdminValidation::class)->group(function () {
    Route::view('/', 'dashboard')->name('dashboard');
 
    Route::prefix('shop')->group(function () {
@@ -52,7 +54,7 @@ Route::prefix('dashboard')->group(function () {
     Route::controller(UserDataController::class)->group(function () {
         Route::get('users', 'index')->name('users.index');
     });
-})->middleware(['auth', 'verified']);
+});
 
 
 

@@ -54,4 +54,26 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserData::class);
     }
+    /**
+     * Check if the user has a specific role.
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
+    /**
+     * Assign a role to the user.
+     *
+     * @param string $role
+     * @return void
+     */
+    public function assignRole($role)
+    {
+        $this->role = $role;
+        $this->save();
+    }
 }
