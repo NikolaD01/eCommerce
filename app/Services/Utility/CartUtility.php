@@ -36,6 +36,7 @@ class CartUtility
             $item['product'] = $product;
             $item['media'] = $mediaService->getMediaColor($item['product_id'],$item['color']);
             $item['size'] =  $sizeService->getSize($item['size']);
+            $item['total'] = $item['product']->price * $item['quantity'];
         }
 
         return $cart;
@@ -47,22 +48,25 @@ class CartUtility
      * @param array $data
      * @return void
      */
-    public static function addToCart($data) : void
+    public static function addToCart($data) : ?string
     {
+        if (empty($data['color']) || empty($data['size'])) {
+            return 'Both color and size must be provided to add the product to the cart.';
+        }
+
         $cart = session()->get('cart', []);
         $cartItemKey = self::generateCartItemKey($data['product_id'], $data['color'], $data['size']);
 
-        Log::info('Current Cart:', $cart);
-        Log::info('Generated Cart Item Key:', [$cartItemKey]);
+
         if (isset($cart[$cartItemKey])) {
             $cart[$cartItemKey]['quantity'] += $data['quantity'];
         } else {
             $cart[$cartItemKey] = $data;
         }
-        Log::info('Updated Cart:', $cart);
 
         session()->put('cart', $cart);
         session()->save();
+        return true;
     }
 
     /**
@@ -73,7 +77,7 @@ class CartUtility
      * @param string|null $sizeName
      * @return string
      */
-    protected static function generateCartItemKey(int $productId, int|null $colorId = null, string|null $sizeName = null) : string
+    protected static function generateCartItemKey(int $productId, int|null $colorId = null, string|null $sizeName = null) : ?string
     {
         $key = $productId;
 
