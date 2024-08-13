@@ -9,14 +9,14 @@ use Livewire\Component;
 
 class CartList extends Component
 {
-    public $cartItems;
+    public $cart;
     protected ProductService $productService;
 
 
 
     public function render()
     {
-        $this->cartItems = CartUtility::listCartItems();
+        $this->cart = CartUtility::listCartItems();
         return view('livewire.portal.cart.cart-list');
     }
 }

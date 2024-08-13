@@ -5,56 +5,77 @@ namespace App\Services\Utility;
 use App\Services\Media\MediaService;
 use App\Services\Shop\ProductService;
 use App\Services\Shop\SizeService;
-use Illuminate\Support\Facades\Log;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class CartUtility
 {
     /**
      * Get all items currently in the cart.
      *
-     * @return array
+     * @return array|null
      */
-    public static function getCartItems() : array
+    public static function getCartItems() : array|null
     {
-        return session()->get('cart', []);
+        try {
+            return session()->get('cart', []);
+        } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+            return null;
+        }
     }
 
     /**
      * List all items in the cart with details.
      *
-     * @return array
+     * @return array|boolean
      */
-    public static function listCartItems() : array
+    public static function listCartItems() : ?array
     {
         $productService = app(ProductService::class);
         $mediaService = app(MediaService::class);
         $sizeService = app(SizeService::class);
         $cart = self::getCartItems();
+        $cartItems = [];
+        $total = 0;
 
-        foreach ($cart as &$item) {
-            $product = $productService->getProduct($item['product_id']);
-            $item['product'] = $product;
-            $item['media'] = $mediaService->getMediaColor($item['product_id'],$item['color']);
-            $item['size'] =  $sizeService->getSize($item['size']);
-            $item['total'] = $item['product']->price * $item['quantity'];
+        if ($cart) {
+            foreach ($cart as &$item) {
+                if (is_array($item) && isset($item['product_id'])) {
+                    $product = $productService->getProduct($item['product_id']);
+                    $item['product'] = $product;
+                    $item['media'] = $mediaService->getMediaColor($item['product_id'], $item['color']);
+                    $item['size'] = $sizeService->getSize($item['size']);
+                    $item['total'] = $item['product']->price * $item['quantity'];
+                    $total += $item['total'];
+                    $cartItems[] = $item;
+                }
+            }
+
+            return [
+                'items' => $cartItems,
+                'total' => $total
+            ];
         }
-
-        return $cart;
+        return null;
     }
 
     /**
      * Add a product to the cart.
      *
      * @param array $data
-     * @return void
+     * @return true|null
      */
-    public static function addToCart($data) : ?string
+    public static function addToCart(array $data) : ?true
     {
         if (empty($data['color']) || empty($data['size'])) {
-            return 'Both color and size must be provided to add the product to the cart.';
+            return null;
         }
 
-        $cart = session()->get('cart', []);
+        try {
+            $cart = session()->get('cart', []);
+        } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+            $cart = [];
+        }
         $cartItemKey = self::generateCartItemKey($data['product_id'], $data['color'], $data['size']);
 
 
@@ -75,7 +96,7 @@ class CartUtility
      * @param int $productId
      * @param int|null $colorId
      * @param string|null $sizeName
-     * @return string
+     * @return string|null
      */
     protected static function generateCartItemKey(int $productId, int|null $colorId = null, string|null $sizeName = null) : ?string
     {
@@ -100,7 +121,11 @@ class CartUtility
      */
     public static function removeFromCart(string $cartItemKey) : void
     {
-        $cart = session()->get('cart', []);
+        try {
+            $cart = session()->get('cart', []);
+        } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+            return;
+        }
 
         if (isset($cart[$cartItemKey])) {
             unset($cart[$cartItemKey]);
